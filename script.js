@@ -14,7 +14,7 @@ gsap.utils.toArray('.reveal').forEach((el) => {
 });
 
 /* HERO PARALLAX */
-gsap.to('.hero-img img', {
+gsap.to('.hero-left img', {
   y: 60,
   scrollTrigger: {
     trigger: '.hero',
@@ -23,16 +23,39 @@ gsap.to('.hero-img img', {
 });
 
 /* SWIPER */
-new Swiper('.perjalananSwiper', {
-  slidesPerView: 'auto',
-  spaceBetween: 20,
-  centeredSlides: true,
-  loop: true,
-  autoplay: {
-    delay: 2500,
-    disableOnInteraction: false,
-  },
-});
+let swiperDivisi;
+
+function initSwiper() {
+  swiperDivisi = new Swiper('.divisiSwiper', {
+    slidesPerView: 3,
+    spaceBetween: 30,
+
+    loop: true,
+
+    autoplay: {
+      delay: 2500,
+      disableOnInteraction: false,
+    },
+
+    breakpoints: {
+      0: {
+        slidesPerView: 1.15,
+        centeredSlides: true,
+        spaceBetween: 12,
+      },
+
+      768: {
+        slidesPerView: 2,
+      },
+
+      1024: {
+        slidesPerView: 3,
+      },
+    },
+  });
+}
+
+initSwiper();
 
 /* HOVER EFFECT */
 const btn = document.querySelector('.hero-btn a');
@@ -139,4 +162,248 @@ window.addEventListener('scroll', () => {
       a.classList.add('active');
     }
   });
+});
+
+/* TOGGLE FULL DIVISI */
+const divisiBtn = document.getElementById('toggleDivisi');
+const divisiSwiperEl = document.querySelector('.divisiSwiper');
+
+let showAll = false;
+
+divisiBtn.addEventListener('click', () => {
+  showAll = !showAll;
+
+  if (showAll) {
+    divisiSwiperEl.classList.add('show-all');
+
+    swiperDivisi.destroy(true, true);
+
+    divisiBtn.textContent = 'Sembunyikan';
+  } else {
+    divisiSwiperEl.classList.remove('show-all');
+
+    initSwiper();
+
+    divisiBtn.textContent = 'Lihat Seluruh Divisi';
+  }
+});
+
+/* ========================= */
+/* 🔥 POPUP DIVISI */
+/* ========================= */
+
+window.addEventListener('DOMContentLoaded', () => {
+  const modal = document.getElementById('divisiModal');
+  const modalImg = document.getElementById('modalImg');
+  const modalTitle = document.getElementById('modalTitle');
+  const modalDesc = document.getElementById('modalDesc');
+  const closeModal = document.getElementById('closeModal');
+
+  const divisiData = [
+    {
+      title: 'PH',
+      img: 'assets/roblox_asik.png',
+      desc: 'Divisi Pengembangan Sumber Daya Insani berfokus pada pembinaan kader dakwah yang aktif dan berkualitas.',
+    },
+
+    {
+      title: 'HUMMED',
+      img: 'assets/roblox_asik.png',
+      desc: 'Divisi HUMMED bertanggung jawab dalam media informasi dan publikasi kegiatan DHM.',
+    },
+
+    {
+      title: 'PSDI',
+      img: 'assets/roblox_asik.png',
+      desc: 'Divisi PSDI berperan dalam pengembangan kaderisasi dan peningkatan SDM.',
+    },
+
+    {
+      title: 'PS',
+      img: 'assets/roblox_asik.png',
+      desc: 'Divisi Pembinaan Siswa fokus pada pembinaan pelajar sekolah.',
+    },
+
+    {
+      title: 'PM',
+      img: 'assets/roblox_asik.png',
+      desc: 'Divisi Pembinaan Masyarakat bergerak dalam pengabdian masyarakat.',
+    },
+
+    {
+      title: 'Kemuslimahan',
+      img: 'assets/roblox_asik.png',
+      desc: 'Divisi Kemuslimahan fokus pada pembinaan muslimah aktif. Syududuuuuuuuuuuuuuu',
+    },
+  ];
+
+  const openBtns = document.querySelectorAll('.openDivisi');
+
+  openBtns.forEach((btn, i) => {
+    btn.addEventListener('click', () => {
+      modal.classList.add('active');
+
+      modalTitle.textContent = divisiData[i].title;
+
+      modalDesc.textContent = divisiData[i].desc;
+
+      modalImg.src = divisiData[i].img;
+    });
+  });
+
+  closeModal.addEventListener('click', () => {
+    modal.classList.remove('active');
+  });
+
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) {
+      modal.classList.remove('active');
+    }
+  });
+});
+
+/* ========================= */
+/* GALLERY POPUP */
+/* ========================= */
+let currentGallery = 0;
+let currentImage = 0;
+
+const popupGalleryImg = document.getElementById('popupGalleryImg');
+
+const prevBtn = document.getElementById('galleryPrev');
+
+const nextBtn = document.getElementById('galleryNext');
+
+window.addEventListener('DOMContentLoaded', () => {
+  const galleryPopup = document.getElementById('galleryPopup');
+
+  const closeGallery = document.getElementById('closeGallery');
+
+  const popupTitle = document.getElementById('popupGalleryTitle');
+
+  const popupDesc = document.getElementById('popupGalleryDesc');
+
+  const popupDate = document.querySelector('.popup-date');
+
+  const openGalleryBtns = document.querySelectorAll('.openGallery');
+
+  openGalleryBtns.forEach((btn) => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+
+      const card = btn.closest('.gallery-card');
+
+      currentGallery = parseInt(card.dataset.gallery);
+
+      currentImage = 0;
+
+      const data = galleryData[currentGallery];
+
+      popupTitle.textContent = data.title;
+
+      popupDate.textContent = data.date;
+
+      popupDesc.innerHTML = data.desc;
+
+      popupGalleryImg.src = data.images[currentImage];
+
+      galleryPopup.classList.add('active');
+    });
+  });
+
+  /* CLOSE */
+
+  closeGallery.addEventListener('click', () => {
+    galleryPopup.classList.remove('active');
+  });
+
+  /* CLICK OUTSIDE */
+
+  galleryPopup.addEventListener('click', (e) => {
+    if (e.target === galleryPopup) {
+      galleryPopup.classList.remove('active');
+    }
+  });
+});
+
+const galleryData = [
+  {
+    title: 'Relawan Ramadhan 1446/1447 H',
+
+    date: '12 Februari - 13 Februari 2026',
+
+    desc: `
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+      Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+      <br><br>
+
+      Duis aute irure dolor in reprehenderit in voluptate velit esse.
+    `,
+
+    images: ['assets/gallery1.jpg', 'assets/gallery2.jpg', 'assets/gallery3.jpg'],
+  },
+
+  {
+    title: 'Dauroh Kampus',
+
+    date: '20 Februari 2026',
+
+    desc: `
+      Dokumentasi kegiatan dauroh bersama mahasiswa.
+    `,
+
+    images: ['assets/gallery4.jpg', 'assets/gallery5.jpg'],
+  },
+
+  {
+    title: 'Kajian Rutin',
+
+    date: '1 Maret 2026',
+
+    desc: `
+      Kajian rutin mingguan DHM.
+    `,
+
+    images: ['assets/gallery6.jpg', 'assets/gallery7.jpg', 'assets/gallery8.jpg'],
+  },
+  {
+    title: 'Kajian Akbar',
+
+    date: '5 Maret 2026',
+
+    desc: `
+    Dokumentasi kegiatan kajian akbar DHM.Dokumentasi kegiatan kajian akbar DHM.Dokumentasi kegiatan kajian akbar DHM.Dokumentasi kegiatan kajian akbar DHM.Dokumentasi kegiatan kajian akbar DHM.Dokumentasi kegiatan kajian akbar DHM.Dokumentasi kegiatan kajian akbar DHM.Dokumentasi kegiatan kajian akbar DHM.Dokumentasi kegiatan kajian akbar DHM.Dokumentasi kegiatan kajian akbar DHM.Dokumentasi kegiatan kajian akbar DHM.Dokumentasi kegiatan kajian akbar DHM.Dokumentasi kegiatan kajian akbar DHM.
+  `,
+
+    images: ['assets/gallery9.jpg', 'assets/gallery10.jpg'],
+  },
+];
+
+/* NEXT */
+
+nextBtn.addEventListener('click', () => {
+  const images = galleryData[currentGallery].images;
+
+  currentImage++;
+
+  if (currentImage >= images.length) {
+    currentImage = 0;
+  }
+
+  popupGalleryImg.src = images[currentImage];
+});
+
+/* PREV */
+
+prevBtn.addEventListener('click', () => {
+  const images = galleryData[currentGallery].images;
+
+  currentImage--;
+
+  if (currentImage < 0) {
+    currentImage = images.length - 1;
+  }
+
+  popupGalleryImg.src = images[currentImage];
 });
