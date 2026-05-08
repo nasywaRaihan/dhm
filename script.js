@@ -265,14 +265,8 @@ window.addEventListener('DOMContentLoaded', () => {
 /* ========================= */
 /* GALLERY POPUP */
 /* ========================= */
+
 let currentGallery = 0;
-let currentImage = 0;
-
-const popupGalleryImg = document.getElementById('popupGalleryImg');
-
-const prevBtn = document.getElementById('galleryPrev');
-
-const nextBtn = document.getElementById('galleryNext');
 
 window.addEventListener('DOMContentLoaded', () => {
   const galleryPopup = document.getElementById('galleryPopup');
@@ -285,7 +279,60 @@ window.addEventListener('DOMContentLoaded', () => {
 
   const popupDate = document.querySelector('.popup-date');
 
+  const prevBtn = document.getElementById('galleryPrev');
+
+  const nextBtn = document.getElementById('galleryNext');
+
   const openGalleryBtns = document.querySelectorAll('.openGallery');
+
+  const sliderTrack = document.getElementById('popupSliderTrack');
+
+  const sliderDots = document.getElementById('popupSliderDots');
+
+  function loadGallery(index) {
+    const data = galleryData[index];
+
+    popupTitle.textContent = data.title;
+
+    popupDate.textContent = data.date;
+
+    popupDesc.innerHTML = data.desc;
+
+    /* RESET */
+    sliderTrack.innerHTML = '';
+
+    sliderDots.innerHTML = '';
+
+    /* IMG */
+    data.images.forEach((img, i) => {
+      const image = document.createElement('img');
+
+      image.src = img;
+
+      sliderTrack.appendChild(image);
+
+      /* DOT */
+      const dot = document.createElement('div');
+
+      dot.classList.add('popup-dot');
+
+      if (i === 0) {
+        dot.classList.add('active');
+      }
+
+      dot.addEventListener('click', () => {
+        sliderTrack.style.transform = `translateX(-${i * 100}%)`;
+
+        document.querySelectorAll('.popup-dot').forEach((d) => d.classList.remove('active'));
+
+        dot.classList.add('active');
+      });
+
+      sliderDots.appendChild(dot);
+    });
+  }
+
+  /* OPEN POPUP */
 
   openGalleryBtns.forEach((btn) => {
     btn.addEventListener('click', (e) => {
@@ -295,20 +342,34 @@ window.addEventListener('DOMContentLoaded', () => {
 
       currentGallery = parseInt(card.dataset.gallery);
 
-      currentImage = 0;
-
-      const data = galleryData[currentGallery];
-
-      popupTitle.textContent = data.title;
-
-      popupDate.textContent = data.date;
-
-      popupDesc.innerHTML = data.desc;
-
-      popupGalleryImg.src = data.images[currentImage];
+      loadGallery(currentGallery);
 
       galleryPopup.classList.add('active');
     });
+  });
+
+  /* NEXT */
+
+  nextBtn.addEventListener('click', () => {
+    currentGallery++;
+
+    if (currentGallery >= galleryData.length) {
+      currentGallery = 0;
+    }
+
+    loadGallery(currentGallery);
+  });
+
+  /* PREV */
+
+  prevBtn.addEventListener('click', () => {
+    currentGallery--;
+
+    if (currentGallery < 0) {
+      currentGallery = galleryData.length - 1;
+    }
+
+    loadGallery(currentGallery);
   });
 
   /* CLOSE */
@@ -341,7 +402,7 @@ const galleryData = [
       Duis aute irure dolor in reprehenderit in voluptate velit esse.
     `,
 
-    images: ['assets/gallery1.jpg', 'assets/gallery2.jpg', 'assets/gallery3.jpg'],
+    images: ['assets/roblox_asik.png', 'assets/gallery2.jpg', 'assets/logo_dhm.png'],
   },
 
   {
@@ -350,7 +411,12 @@ const galleryData = [
     date: '20 Februari 2026',
 
     desc: `
-      Dokumentasi kegiatan dauroh bersama mahasiswa.
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+      Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+      <br><br>
+
+      Duis aute irure dolor in reprehenderit in voluptate velit esse.
     `,
 
     images: ['assets/gallery4.jpg', 'assets/gallery5.jpg'],
@@ -362,7 +428,12 @@ const galleryData = [
     date: '1 Maret 2026',
 
     desc: `
-      Kajian rutin mingguan DHM.
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+      Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+      <br><br>
+
+      Duis aute irure dolor in reprehenderit in voluptate velit esse.
     `,
 
     images: ['assets/gallery6.jpg', 'assets/gallery7.jpg', 'assets/gallery8.jpg'],
@@ -373,37 +444,14 @@ const galleryData = [
     date: '5 Maret 2026',
 
     desc: `
-    Dokumentasi kegiatan kajian akbar DHM.Dokumentasi kegiatan kajian akbar DHM.Dokumentasi kegiatan kajian akbar DHM.Dokumentasi kegiatan kajian akbar DHM.Dokumentasi kegiatan kajian akbar DHM.Dokumentasi kegiatan kajian akbar DHM.Dokumentasi kegiatan kajian akbar DHM.Dokumentasi kegiatan kajian akbar DHM.Dokumentasi kegiatan kajian akbar DHM.Dokumentasi kegiatan kajian akbar DHM.Dokumentasi kegiatan kajian akbar DHM.Dokumentasi kegiatan kajian akbar DHM.Dokumentasi kegiatan kajian akbar DHM.
+        Lorem ipsum dolor sit amet, consectetur adipisicing elit.
+      Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+      <br><br>
+
+      Duis aute irure dolor in reprehenderit in voluptate velit esse.
   `,
 
     images: ['assets/gallery9.jpg', 'assets/gallery10.jpg'],
   },
 ];
-
-/* NEXT */
-
-nextBtn.addEventListener('click', () => {
-  const images = galleryData[currentGallery].images;
-
-  currentImage++;
-
-  if (currentImage >= images.length) {
-    currentImage = 0;
-  }
-
-  popupGalleryImg.src = images[currentImage];
-});
-
-/* PREV */
-
-prevBtn.addEventListener('click', () => {
-  const images = galleryData[currentGallery].images;
-
-  currentImage--;
-
-  if (currentImage < 0) {
-    currentImage = images.length - 1;
-  }
-
-  popupGalleryImg.src = images[currentImage];
-});
