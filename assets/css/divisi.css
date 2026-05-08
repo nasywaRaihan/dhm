@@ -1,0 +1,236 @@
+.divisi {
+  position: relative;
+
+  background: #3f5f3f;
+
+  margin-top: -180px;
+
+  padding: 260px 80px 100px;
+
+  border-top-left-radius: 50% 180px;
+  border-top-right-radius: 50% 180px;
+
+  overflow: hidden;
+
+  z-index: 1;
+
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.divisi * {
+  position: relative;
+  z-index: 2;
+}
+
+.divisi::before {
+  content: '';
+
+  position: absolute;
+  inset: 0;
+
+  background-image: linear-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.05) 1px, transparent 1px);
+
+  background-size: 40px 40px;
+
+  z-index: 0;
+}
+
+.divisi::after {
+  content: '';
+
+  position: absolute;
+
+  top: -120px;
+  left: 50%;
+
+  transform: translateX(-50%);
+
+  width: 120%;
+  height: 250px;
+
+  background: radial-gradient(ellipse at center, rgba(255, 255, 255, 0.12), transparent 70%);
+
+  pointer-events: none;
+}
+
+/* SWIPER DIVISI */
+.divisiSwiper {
+  width: 100%;
+  max-width: 1300px;
+
+  padding: 30px 10px 20px;
+}
+
+.divisiSwiper .swiper-slide {
+  background: white;
+  border-radius: 20px;
+  padding: 20px;
+}
+
+.divisi-card {
+  position: relative;
+  height: 100%;
+  background: rgba(255, 255, 255, 0.95);
+
+  border-radius: 28px;
+  overflow: hidden;
+  transition: 0.4s ease;
+
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
+}
+
+.divisi-card:hover {
+  transform: translateY(-10px);
+
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.18);
+}
+
+/* IMAGE */
+.divisi-banner {
+  height: 160px;
+
+  overflow: hidden;
+
+  position: relative;
+}
+
+.divisi-banner::after {
+  content: '';
+
+  position: absolute;
+  inset: 0;
+
+  background: linear-gradient(to top, rgba(63, 95, 63, 0.75), transparent);
+}
+
+.divisi-banner img {
+  width: 100%;
+  height: 100%;
+
+  object-fit: cover;
+}
+
+/* ICON */
+.divisi-icon {
+  position: absolute;
+
+  top: 118px;
+  left: 30px;
+
+  width: 82px;
+  height: 82px;
+
+  border-radius: 50%;
+
+  background: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.divisi-icon img {
+  width: 42px;
+}
+
+/* CONTENT */
+.divisi-content {
+  padding: 60px 30px 30px;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.divisi-content h3 {
+  font-size: 1.4rem;
+
+  color: #2f4f2f;
+
+  margin-bottom: 14px;
+}
+
+.divisi-content p {
+  font-size: 0.95rem;
+
+  line-height: 1.7;
+
+  color: #555;
+
+  margin-bottom: 18px;
+}
+
+.divisi-content a {
+  color: #3f5f3f;
+
+  text-decoration: none;
+
+  font-weight: 600;
+
+  transition: 0.3s;
+}
+
+.divisi-content a:hover {
+  letter-spacing: 1px;
+}
+
+.divisi-btn button {
+  padding: 14px 34px;
+
+  border: none;
+  outline: none;
+
+  border-radius: 50px;
+
+  background: white;
+
+  color: #2f4f2f;
+
+  font-weight: 600;
+  font-size: 1rem;
+
+  cursor: pointer;
+
+  transition: 0.3s ease;
+
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+.divisi-btn button:hover {
+  transform: translateY(-5px);
+
+  background: #dce8dc;
+}
+
+.openDivisi {
+  margin-top: 10px;
+  background: transparent;
+  border: none;
+  color: #2f4f2f;
+  font-weight: 600;
+  cursor: pointer;
+  font-size: 0.95rem;
+  transition: 0.3s ease;
+}
+
+.openDivisi:hover {
+  letter-spacing: 1px;
+
+  opacity: 0.8;
+}
+
+/* MODE FULL GRID */
+.divisiSwiper.show-all .swiper-wrapper {
+  display: grid;
+
+  grid-template-columns: repeat(3, 1fr);
+
+  gap: 35px;
+}
+
+.divisiSwiper.show-all .swiper-slide {
+  width: 100% !important;
+}

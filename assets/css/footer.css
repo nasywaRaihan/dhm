@@ -1,0 +1,13 @@
+/* PARTNER */
+.partners img {
+  height: 80px;
+  margin: 20px;
+}
+
+/* FOOTER */
+footer {
+  background: #2f4f2f;
+  color: white;
+  padding: 60px;
+  align-items: center;
+}

@@ -1,0 +1,50 @@
+:root {
+  --title-size: 70px;
+  --arab-size: 50px;
+  --subtitle-size: 20px;
+  --section-title-size: 50px;
+
+  --title-stroke: 13px;
+  --arab-stroke: 10px;
+  --section-title-stroke: 10px;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #f9fbf8;
+  color: #2f4f2f;
+  font-family: 'Poppins', sans-serif;
+  overflow-x: hidden;
+}
+
+body.menu-open::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.2);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 998;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+a {
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+}
