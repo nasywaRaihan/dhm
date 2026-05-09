@@ -61,3 +61,31 @@ searchInput.addEventListener('input', (e) => {
 
   renderGallery(filteredGallery);
 });
+
+/* FILTER */
+
+const filterBtns = document.querySelectorAll('.filter-btn');
+
+filterBtns.forEach((btn) => {
+  btn.addEventListener('click', () => {
+    filterBtns.forEach((b) => {
+      b.classList.remove('active');
+    });
+
+    btn.classList.add('active');
+
+    const category = btn.dataset.category;
+
+    if (category === 'Semua') {
+      renderGallery(galleryData);
+
+      return;
+    }
+
+    const filteredGallery = galleryData.filter((item) => {
+      return item.category === category;
+    });
+
+    renderGallery(filteredGallery);
+  });
+});
