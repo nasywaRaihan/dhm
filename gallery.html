@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Gallery DHM</title>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <!-- FONT -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="assets/css/base.css" />
+    <link rel="stylesheet" href="assets/css/navbar.css" />
+    <link rel="stylesheet" href="assets/css/popup.css" />
+    <link rel="stylesheet" href="assets/css/footer.css" />
+    <link rel="stylesheet" href="assets/css/gallery-page.css" />
+    <link rel="stylesheet" href="assets/css/responsive.css" />
+  </head>
+
+  <body>
+    <!-- NAVBAR -->
+    <header class="navbar">
+      <div class="logo">
+        <img src="assets/logo_dhm.png" class="logo-icon" alt="logo dhm" />
+        <span class="logo-text">DAKWAH HIJRAH MAHASISWA</span>
+      </div>
+
+      <div class="menu-toggle" id="menuToggle">
+        <span></span>
+        <span></span>
+      </div>
+
+      <nav id="navMenu">
+        <a href="index.html">Home</a>
+        <a href="gallery.html" class="active">Gallery</a>
+
+        <a href="#login" class="admin-link">Login Admin</a>
+      </nav>
+    </header>
+
+    <!-- HERO -->
+    <section class="gallery-page-hero">
+      <h1 class="gallery-page-title">Gallery Kegiatan DHM</h1>
+
+      <p class="gallery-page-subtitle">Dokumentasi kegiatan, program kerja, dan perjalanan dakwah DHM.</p>
+    </section>
+
+    <!-- FILTER -->
+    <section class="gallery-filter-section">
+      <div class="gallery-filter-container">
+        <!-- SEARCH -->
+        <input type="text" id="gallerySearch" placeholder="Cari kegiatan..." />
+
+        <!-- FILTER BUTTON -->
+        <div class="gallery-filter-buttons">
+          <button class="filter-btn active" data-category="Semua">Semua</button>
+
+          <button class="filter-btn" data-category="Kajian">Kajian</button>
+
+          <button class="filter-btn" data-category="Dauroh">Dauroh</button>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALLERY GRID -->
+    <section class="gallery-page-section">
+      <div class="gallery-page-grid" id="galleryGrid">
+        <!-- CARD VIA JS -->
+      </div>
+    </section>
+
+    <!-- POPUP -->
+    <div class="gallery-popup" id="galleryPopup">
+      <div class="gallery-popup-content">
+        <!-- CLOSE -->
+        <button class="close-modal" id="closeGallery">✕</button>
+
+        <!-- PREV -->
+        <button class="gallery-nav prev" id="galleryPrev">←</button>
+
+        <!-- NEXT -->
+        <button class="gallery-nav next" id="galleryNext">→</button>
+
+        <!-- IMAGE -->
+        <div class="popup-gallery-image">
+          <div class="popup-gallery-left">
+            <div class="popup-slider">
+              <div class="popup-slider-track" id="popupSliderTrack"></div>
+
+              <div class="popup-slider-dots" id="popupSliderDots"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- INFO -->
+        <div class="popup-gallery-info">
+          <h2 id="popupGalleryTitle">Gallery Title</h2>
+
+          <span class="popup-date"> Tanggal </span>
+
+          <p id="popupGalleryDesc">Deskripsi gallery</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- FOOTER -->
+    <footer>
+      <p>© 2026 Dakwah Hijrah Mahasiswa UII</p>
+    </footer>
+
+    <!-- JS -->
+    <script src="assets/js/data.js"></script>
+    <script src="assets/js/navbar.js"></script>
+    <script src="assets/js/gallery.js"></script>
+    <script src="assets/js/gallery-page.js"></script>
+    <script src="assets/js/main.js"></script>
+  </body>
+</html>
