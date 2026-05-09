@@ -42,8 +42,8 @@
       <nav id="navMenu">
         <a href="#home">Home</a>
         <a href="#tentang">Profile</a>
+        <a href="#divisi">Division</a>
         <a href="#gallery">Gallery</a>
-        <a href="#contact">Contact</a>
 
         <a href="#login" class="admin-link">Login Admin</a>
       </nav>
@@ -151,7 +151,7 @@
     </section>
 
     <!-- DIVISI DHM -->
-    <section class="section divisi">
+    <section id="divisi" class="section divisi">
       <h1 class="section-title">
         <span class="stroke">DIVISI DHM</span>
         <span class="gradient">DIVISI DHM</span>
@@ -309,14 +309,14 @@
         <!-- GALLERY LIST -->
         <div class="gallery-list">
           <!-- CARD 1 -->
-          <div class="gallery-card" data-gallery="0">
+          <div class="home-gallery-card" data-gallery="0">
             <div class="gallery-pin"></div>
 
-            <div class="gallery-photo">
+            <div class="home-gallery-photo">
               <img src="assets/roblox_asik.png" alt="gallery" />
             </div>
 
-            <div class="gallery-info">
+            <div class="home-gallery-info">
               <h3>RELAWAN RAMADHAN 1446/1447 H</h3>
 
               <p>Divisi Pembinaan Masyarakat</p>
@@ -328,14 +328,14 @@
           </div>
 
           <!-- CARD 2 -->
-          <div class="gallery-card" data-gallery="1">
+          <div class="home-gallery-card" data-gallery="1">
             <div class="gallery-pin"></div>
 
-            <div class="gallery-photo">
+            <div class="home-gallery-photo">
               <img src="assets/roblox_asik.png" alt="gallery" />
             </div>
 
-            <div class="gallery-info">
+            <div class="home-gallery-info">
               <h3>DAUROH KAMPUS</h3>
 
               <p>Divisi PSDI</p>
@@ -347,14 +347,14 @@
           </div>
 
           <!-- CARD 3 -->
-          <div class="gallery-card" data-gallery="2">
+          <div class="home-gallery-card" data-gallery="2">
             <div class="gallery-pin"></div>
 
-            <div class="gallery-photo">
+            <div class="home-gallery-photo">
               <img src="assets/roblox_asik.png" alt="gallery" />
             </div>
 
-            <div class="gallery-info">
+            <div class="home-gallery-info">
               <h3>KAJIAN RUTIN</h3>
 
               <p>Divisi HUMMED</p>
@@ -366,14 +366,14 @@
           </div>
 
           <!-- CARD 4 -->
-          <div class="gallery-card" data-gallery="3">
+          <div class="home-gallery-card" data-gallery="3">
             <div class="gallery-pin"></div>
 
-            <div class="gallery-photo">
+            <div class="home-gallery-photo">
               <img src="assets/roblox_asik.png" alt="gallery" />
             </div>
 
-            <div class="gallery-info">
+            <div class="home-gallery-info">
               <h3>KAJIAN AKBAR</h3>
 
               <p>Divisi Pembinaan Siswa</p>
@@ -386,7 +386,7 @@
         </div>
 
         <!-- BUTTON -->
-        <a href="gallery.html" class="gallery-more"> Lihat lebih banyak disini </a>
+        <a href="gallery.html" class="home-gallery-more btn-secondary"> Lihat lebih banyak disini </a>
       </div>
     </section>
 
@@ -460,6 +460,7 @@
     <script src="assets/js/popup.js"></script>
     <script src="assets/js/gallery.js"></script>
     <script src="assets/js/animation.js"></script>
+    <script src="assets/js/login.js"></script>
     <script src="assets/js/main.js"></script>
 
     <!-- POPUP DIVISI -->
@@ -474,6 +475,50 @@
 
       <!-- CLOSE -->
       <button class="close-modal" id="closeModal">✕</button>
+    </div>
+
+    <!-- LOGIN POPUP -->
+    <div class="login-popup" id="loginPopup">
+      <div class="login-popup-content">
+        <!-- CLOSE -->
+        <button class="login-close" id="closeLogin">✕</button>
+
+        <!-- HEADER -->
+        <div class="login-header">
+          <h2>Admin Login</h2>
+
+          <p>Masuk untuk mengelola website DHM</p>
+        </div>
+
+        <!-- FORM -->
+        <form class="login-form" id="loginForm">
+          <!-- EMAIL -->
+          <div class="login-group">
+            <label>Email</label>
+
+            <input type="email" id="loginEmail" placeholder="Masukkan email" required />
+          </div>
+
+          <!-- PASSWORD -->
+          <div class="login-group">
+            <label>Password</label>
+
+            <input type="password" id="loginPassword" placeholder="Masukkan password" required />
+          </div>
+
+          <!-- REMEMBER -->
+          <div class="login-options">
+            <label class="remember-me">
+              <input type="checkbox" />
+
+              <span>Remember me</span>
+            </label>
+          </div>
+
+          <!-- BUTTON -->
+          <button type="submit" class="login-btn">Login Sekarang</button>
+        </form>
+      </div>
     </div>
   </body>
 </html>

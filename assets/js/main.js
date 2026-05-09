@@ -23,4 +23,9 @@ document.addEventListener('DOMContentLoaded', () => {
   if (typeof initDivisiPopup === 'function') {
     initDivisiPopup();
   }
+
+  /* LOGIN POPUP */
+  if (typeof initLoginPopup === 'function') {
+    initLoginPopup();
+  }
 });

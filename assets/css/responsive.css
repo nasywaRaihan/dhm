@@ -411,6 +411,9 @@
 
   .gallery-popup-content {
     flex-direction: column;
+
+    max-height: 90vh;
+    overflow-y: auto;
   }
 
   .gallery-nav {
@@ -434,8 +437,12 @@
 
     margin-inline: auto;
 
-    font-size: 13px;
+    font-size: var(--text-xs);
     line-height: 1.8;
+  }
+
+  .gallery-popup .close-modal {
+    top: 12px;
   }
 
   /* SCRAPBOOK MOBILE */
@@ -452,7 +459,7 @@
     height: auto;
   }
 
-  .gallery-card {
+  .home-gallery-card {
     position: relative !important;
 
     left: auto !important;
@@ -475,7 +482,7 @@
     animation: floatPolaroid 4s ease-in-out infinite;
   }
 
-  .gallery-photo {
+  .home-gallery-photo {
     width: 100%;
     height: 95px;
     flex-shrink: 0;
@@ -483,13 +490,13 @@
     border-radius: 10px;
   }
 
-  .gallery-photo img {
+  .home-gallery-photo img {
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
 
-  .gallery-info {
+  .home-gallery-info {
     flex: 1;
 
     display: flex;
@@ -497,7 +504,7 @@
     padding-top: 10px;
   }
 
-  .gallery-info h3 {
+  .home-gallery-info h3 {
     font-size: 11px;
     line-height: 1.4;
     margin-bottom: 6px;
@@ -513,39 +520,39 @@
     max-height: 30px;
   }
 
-  .gallery-info p {
+  .home-gallery-info p {
     font-size: 9px;
     line-height: 1.5;
     min-height: 28px;
   }
 
-  .gallery-info span {
+  .home-gallery-info span {
     font-size: 7px;
     margin-bottom: 8px;
     min-height: 18px;
   }
 
-  .gallery-info .openGallery {
+  .home-gallery-info .openGallery {
     margin-top: auto;
     font-size: 8px !important;
     padding: 4px 8px !important;
   }
 
-  .gallery-card:active {
+  .home-gallery-card:active {
     transform: scale(0.96);
   }
 
-  .gallery-card:nth-child(odd) {
+  .home-gallery-card:nth-child(odd) {
     rotate: -4deg !important;
   }
 
-  .gallery-card:nth-child(even) {
+  .home-gallery-card:nth-child(even) {
     rotate: 4deg !important;
   }
 
   /* BUTTON */
 
-  .gallery-more {
+  .home-gallery-more {
     width: 100%;
     max-width: 240px;
 
@@ -627,27 +634,27 @@
     grid-template-columns: repeat(2, 1fr);
   }
 
-  .gallery-card {
+  .home-gallery-card {
     padding: 8px 8px 12px;
   }
 
-  .gallery-photo {
+  .home-gallery-photo {
     height: 105px;
   }
 
-  .gallery-info h3 {
+  .home-gallery-info h3 {
     font-size: 12px;
   }
 
-  .gallery-info p {
+  .home-gallery-info p {
     font-size: 10px;
   }
 
-  .gallery-info span {
+  .home-gallery-info span {
     font-size: 8px;
   }
 
-  .gallery-info .openGallery {
+  .home-gallery-info .openGallery {
     font-size: 8px !important;
     padding: 4px 8px !important;
   }

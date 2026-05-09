@@ -1,0 +1,120 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>DHM Dashboard</title>
+
+    <!-- FONT -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+    <!-- CHART -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="assets/css/base.css" />
+    <link rel="stylesheet" href="assets/css/dashboard.css" />
+  </head>
+
+  <body>
+    <div class="dashboard-layout">
+      <!-- SIDEBAR -->
+      <aside class="sidebar">
+        <div class="sidebar-logo">
+          <h2>DHM Admin</h2>
+        </div>
+
+        <nav class="sidebar-menu">
+          <a href="#" class="active"> Dashboard </a>
+
+          <a href="gallery-admin.html"> Gallery </a>
+
+          <a href="#" id="logoutBtn"> Logout </a>
+        </nav>
+      </aside>
+
+      <!-- MAIN -->
+      <main class="dashboard-main">
+        <!-- TOPBAR -->
+        <header class="dashboard-topbar">
+          <div>
+            <h1>Gallery Dashboard</h1>
+
+            <p>Monitoring statistik gallery DHM</p>
+          </div>
+
+          <div class="admin-profile">A</div>
+        </header>
+
+        <!-- STATS -->
+        <section class="stats-grid">
+          <div class="stats-card">
+            <h3 id="totalGallery">0</h3>
+
+            <p>Total Gallery</p>
+          </div>
+
+          <div class="stats-card">
+            <h3 id="totalViews">0</h3>
+
+            <p>Total Pengunjung</p>
+          </div>
+
+          <div class="stats-card">
+            <h3 id="topGallery">-</h3>
+
+            <p>Gallery Terpopuler</p>
+          </div>
+        </section>
+
+        <!-- CHART -->
+        <section class="dashboard-box chart-box">
+          <div class="chart-header">
+            <div>
+              <h2>Statistik Kunjungan Gallery</h2>
+
+              <p>Berdasarkan jumlah views tiap gallery</p>
+            </div>
+
+            <button class="add-gallery-btn">+ Tambah Gallery</button>
+          </div>
+
+          <canvas id="galleryChart"></canvas>
+        </section>
+
+        <!-- TABLE -->
+        <section class="dashboard-box gallery-table-box" id="galleryTable">
+          <div class="table-header">
+            <h2>Data Gallery</h2>
+          </div>
+
+          <div class="gallery-table-wrapper">
+            <table class="gallery-table">
+              <thead>
+                <tr>
+                  <th>Thumbnail</th>
+                  <th>Judul</th>
+                  <th>Kategori</th>
+                  <th>Views</th>
+                  <th>Aksi</th>
+                </tr>
+              </thead>
+
+              <tbody id="galleryTableBody">
+                <!-- JS -->
+              </tbody>
+            </table>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <!-- DATA -->
+    <script src="assets/js/data.js"></script>
+
+    <!-- JS -->
+    <script src="assets/js/dashboard.js"></script>
+  </body>
+</html>

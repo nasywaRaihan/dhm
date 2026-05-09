@@ -6,8 +6,25 @@
 
 /* FOOTER */
 footer {
-  background: #2f4f2f;
+  background: linear-gradient(135deg, #355b35, #2f4f2f);
   color: white;
-  padding: 60px;
+  padding: 60px 20px;
   align-items: center;
+
+  text-align: center;
+  font-size: var(--text-sm);
+}
+
+@media (max-width: 768px) {
+  footer {
+    padding: 22px 16px;
+  }
+
+  footer p {
+    font-size: 12px;
+
+    line-height: 1.6;
+
+    text-align: center;
+  }
 }

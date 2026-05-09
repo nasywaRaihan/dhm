@@ -1,7 +1,7 @@
 .divisi {
   position: relative;
 
-  background: #3f5f3f;
+  background: var(--secondary);
 
   margin-top: -180px;
 
@@ -146,25 +146,25 @@
 }
 
 .divisi-content h3 {
-  font-size: 1.4rem;
+  font-size: var(--text-xl);
 
-  color: #2f4f2f;
+  color: var(--primary);
 
   margin-bottom: 14px;
 }
 
 .divisi-content p {
-  font-size: 0.95rem;
+  font-size: var(--text-sm);
 
   line-height: 1.7;
 
-  color: #555;
+  color: var(--text-soft);
 
   margin-bottom: 18px;
 }
 
 .divisi-content a {
-  color: #3f5f3f;
+  color: var(--secondary);
 
   text-decoration: none;
 
@@ -187,10 +187,10 @@
 
   background: white;
 
-  color: #2f4f2f;
+  color: var(--primary);
 
   font-weight: 600;
-  font-size: 1rem;
+  font-size: var(--text-xs);
 
   cursor: pointer;
 
@@ -209,10 +209,10 @@
   margin-top: 10px;
   background: transparent;
   border: none;
-  color: #2f4f2f;
+  color: var(--primary);
   font-weight: 600;
   cursor: pointer;
-  font-size: 0.95rem;
+  font-size: var(--text-sm);
   transition: 0.3s ease;
 }
 

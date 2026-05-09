@@ -11,7 +11,7 @@
   overflow: hidden;
   gap: 40px;
 
-  background-color: #f9fbf8;
+  background-color: var(--bg-light);
 
   /* GRID */
   background-image: linear-gradient(#e3ebe3 1px, transparent 1px), linear-gradient(90deg, #e3ebe3 1px, transparent 1px);
@@ -40,7 +40,7 @@
   width: 100%;
   height: 80px;
 
-  background: linear-gradient(to bottom, transparent, #f9fbf8);
+  background: linear-gradient(to bottom, transparent, var(--bg-light));
 }
 
 .hero-left {
@@ -107,7 +107,7 @@
   position: relative;
   z-index: 2;
 
-  background: linear-gradient(to bottom, #8fbf8f, #2f4f2f);
+  background: linear-gradient(to bottom, #8fbf8f, var(--primary));
   -webkit-background-clip: text;
   background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -126,14 +126,20 @@
 /* STROKE */
 .arab .stroke {
   position: absolute;
-  top: 0;
-  left: 0;
+
+  inset: 0;
 
   color: transparent;
-  -webkit-text-stroke: var(--arab-stroke) #ffffff;
+
+  -webkit-text-fill-color: transparent;
+
+  -webkit-text-stroke: 9px #ffffff;
 
   z-index: 1;
-  text-shadow: 8px 8px 20px rgba(0, 0, 0, 5);
+
+  text-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+
+  pointer-events: none;
 }
 
 /* GRADIENT */
@@ -141,9 +147,11 @@
   position: relative;
   z-index: 2;
 
-  background: linear-gradient(to right, #779b7f, #3d5f3e);
+  background: linear-gradient(to right, #779b7f, var(--secondary));
+
   -webkit-background-clip: text;
   background-clip: text;
+
   -webkit-text-fill-color: transparent;
 }
 
@@ -193,7 +201,7 @@
 .hero-btn a:hover {
   color: white;
 
-  background: linear-gradient(270deg, #a8d5a8, #2f4f2f, #a8d5a8);
+  background: linear-gradient(270deg, #a8d5a8, var(--primary), #a8d5a8);
   background-size: 300% 300%;
 
   animation:
@@ -236,29 +244,43 @@
 
 .hero-btn a {
   position: relative;
-  display: inline-block;
-  padding: 14px 36px;
-  border-radius: 50px;
 
-  font-size: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+
+  padding: 14px 36px;
+
+  border-radius: var(--radius-full);
+
+  font-size: var(--text-sm);
   font-weight: 600;
+
   letter-spacing: 1px;
 
   text-decoration: none;
-  color: #2f4f2f;
+
+  color: var(--primary);
 
   background: white;
 
   border: 3px solid transparent;
-  background-image: linear-gradient(white, white), linear-gradient(135deg, #a8d5a8, #2f4f2f);
+
+  background-image: linear-gradient(white, white), linear-gradient(135deg, #a8d5a8, var(--primary));
 
   background-origin: border-box;
+
   background-clip: padding-box, border-box;
 
   box-shadow: 0 6px 15px rgba(47, 79, 47, 0.2);
 
   overflow: hidden;
-  transition: all 0.4s ease;
+
+  transition: var(--transition);
+
+  cursor: pointer;
+
+  isolation: isolate;
 }
 
 .scroll-indicator {

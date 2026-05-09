@@ -1,5 +1,7 @@
 const galleryGrid = document.getElementById('galleryGrid');
 
+const filterContainer = document.getElementById('galleryFilterButtons');
+
 function renderGallery(data) {
   galleryGrid.innerHTML = '';
 
@@ -8,7 +10,7 @@ function renderGallery(data) {
 
     card.classList.add('gallery-card');
 
-    card.dataset.gallery = index;
+    card.dataset.gallery = galleryData.findIndex((g) => g.slug === item.slug);
 
     card.innerHTML = `
     
@@ -32,9 +34,9 @@ function renderGallery(data) {
           ${item.date}
         </span>
 
-        <button class="openGallery">
-          Selengkapnya
-        </button>
+        <a href="gallery-detail.html?slug=${item.slug}" class="detail-btn">
+            Selengkapnya
+        </a>
 
       </div>
 
@@ -45,6 +47,49 @@ function renderGallery(data) {
 
   initGallery();
 }
+
+function renderFilterButtons() {
+  const categories = ['Semua', ...new Set(galleryData.map((item) => item.category))];
+
+  filterContainer.innerHTML = '';
+
+  categories.forEach((category, index) => {
+    const button = document.createElement('button');
+
+    button.classList.add('filter-btn');
+
+    if (index === 0) {
+      button.classList.add('active');
+    }
+
+    button.dataset.category = category;
+
+    button.textContent = category;
+
+    button.addEventListener('click', () => {
+      document.querySelectorAll('.filter-btn').forEach((btn) => {
+        btn.classList.remove('active');
+      });
+
+      button.classList.add('active');
+
+      if (category === 'Semua') {
+        renderGallery(galleryData);
+
+        return;
+      }
+
+      const filteredGallery = galleryData.filter((item) => {
+        return item.category === category;
+      });
+
+      renderGallery(filteredGallery);
+    });
+
+    filterContainer.appendChild(button);
+  });
+}
+renderFilterButtons();
 
 renderGallery(galleryData);
 
@@ -60,32 +105,4 @@ searchInput.addEventListener('input', (e) => {
   });
 
   renderGallery(filteredGallery);
-});
-
-/* FILTER */
-
-const filterBtns = document.querySelectorAll('.filter-btn');
-
-filterBtns.forEach((btn) => {
-  btn.addEventListener('click', () => {
-    filterBtns.forEach((b) => {
-      b.classList.remove('active');
-    });
-
-    btn.classList.add('active');
-
-    const category = btn.dataset.category;
-
-    if (category === 'Semua') {
-      renderGallery(galleryData);
-
-      return;
-    }
-
-    const filteredGallery = galleryData.filter((item) => {
-      return item.category === category;
-    });
-
-    renderGallery(filteredGallery);
-  });
 });

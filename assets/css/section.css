@@ -108,10 +108,10 @@
 }
 
 .visi-card p {
-  color: #1f1f1f;
+  color: var(--text-dark);
 
   font-style: italic;
-  font-size: 14px;
+  font-size: var(--text-sm);
   line-height: 1.8;
   font-weight: 500;
 }
@@ -133,9 +133,9 @@
 }
 
 .misi-card p {
-  color: #1f1f1f;
+  color: var(--text-dark);
 
-  font-size: 14px;
+  font-size: var(--text-sm);
   line-height: 1.7;
   font-style: italic;
 

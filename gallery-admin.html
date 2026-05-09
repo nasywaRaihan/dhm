@@ -1,0 +1,148 @@
+<!doctype html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <title>Tambah Gallery</title>
+
+    <!-- FONT -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="assets/css/base.css" />
+    <!-- TOM SELECT -->
+    <link href="https://cdn.jsdelivr.net/npm/tom-select/dist/css/tom-select.css" rel="stylesheet" />
+
+    <!-- FLATPICKR -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
+    <link rel="stylesheet" href="assets/css/gallery-admin.css" />
+  </head>
+
+  <body>
+    <div class="gallery-admin-layout">
+      <!-- SIDEBAR -->
+      <aside class="gallery-sidebar">
+        <div class="gallery-sidebar-logo">
+          <h2>DHM Admin</h2>
+        </div>
+
+        <nav class="gallery-sidebar-menu">
+          <a href="dashboard.html"> Dashboard </a>
+
+          <a href="gallery-admin.html" class="active"> Tambah Gallery </a>
+
+          <a href="index.html"> Logout </a>
+        </nav>
+      </aside>
+
+      <!-- MAIN -->
+      <main class="gallery-admin-main">
+        <!-- HEADER -->
+        <div class="gallery-admin-header">
+          <div>
+            <h1>Tambah Gallery</h1>
+
+            <p>Tambahkan dokumentasi kegiatan DHM</p>
+          </div>
+        </div>
+
+        <!-- FORM -->
+        <div class="gallery-form-box">
+          <form id="galleryForm">
+            <!-- TITLE -->
+            <div class="form-group">
+              <label> Judul Gallery </label>
+
+              <input type="text" id="galleryTitle" placeholder="Masukkan judul gallery" required />
+            </div>
+
+            <!-- CATEGORY -->
+            <div class="form-group">
+              <label> Kategori </label>
+
+              <select id="galleryCategory" placeholder="Pilih kategori" required>
+                <option value="">Pilih Kategori</option>
+
+                <option value="Festival">Festival</option>
+
+                <option value="Kajian">Kajian</option>
+
+                <option value="Pengajian">Pengajian</option>
+              </select>
+            </div>
+
+            <!-- DIVISION -->
+            <div class="form-group">
+              <label> Divisi </label>
+
+              <select id="galleryDivision" placeholder="Pilih divisi" required>
+                <option value="">Pilih Divisi</option>
+
+                <option value="PH">PH</option>
+
+                <option value="HUMMED">HUMMED</option>
+
+                <option value="PS">PS</option>
+
+                <option value="PM">PM</option>
+
+                <option value="PSDI">PSDI</option>
+              </select>
+            </div>
+
+            <!-- DATE -->
+            <div class="form-group">
+              <label> Tanggal </label>
+
+              <input type="date" id="galleryDate" placeholder="Pilih tanggal" required />
+            </div>
+
+            <!-- THUMBNAIL -->
+            <div class="form-group">
+              <label> Thumbnail Gallery </label>
+
+              <div class="upload-box">
+                <input type="file" id="galleryThumbnail" accept="image/*" hidden />
+
+                <label for="galleryThumbnail" class="upload-label">
+                  <span class="upload-icon"> ⬆ </span>
+
+                  <p>Upload Thumbnail Gallery</p>
+
+                  <small> PNG, JPG, JPEG </small>
+                </label>
+              </div>
+
+              <!-- PREVIEW -->
+              <img id="thumbnailPreview" class="thumbnail-preview" alt="Thumbnail Preview" />
+            </div>
+
+            <!-- DESCRIPTION -->
+            <div class="form-group">
+              <label> Deskripsi </label>
+
+              <textarea id="galleryDesc" placeholder="Masukkan deskripsi gallery" required></textarea>
+            </div>
+
+            <!-- BUTTON -->
+            <button type="submit" class="submit-gallery-btn">Simpan Gallery</button>
+          </form>
+        </div>
+      </main>
+    </div>
+
+    <!-- DATA -->
+    <script src="assets/js/data.js"></script>
+
+    <!-- TOM SELECT -->
+    <script src="https://cdn.jsdelivr.net/npm/tom-select/dist/js/tom-select.complete.min.js"></script>
+
+    <!-- FLATPICKR -->
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+
+    <!-- JS -->
+    <script src="assets/js/gallery-admin.js"></script>
+  </body>
+</html>

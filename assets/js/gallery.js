@@ -1,6 +1,6 @@
-function initGallery() {
-  let currentGallery = 0;
+let currentGallery = 0;
 
+function initGallery() {
   const galleryPopup = document.getElementById('galleryPopup');
 
   const closeGallery = document.getElementById('closeGallery');
@@ -15,14 +15,15 @@ function initGallery() {
 
   const nextBtn = document.getElementById('galleryNext');
 
-  const openGalleryBtns = document.querySelectorAll('.openGallery');
-
   const sliderTrack = document.getElementById('popupSliderTrack');
 
   const sliderDots = document.getElementById('popupSliderDots');
 
+  /* LOAD GALLERY */
   function loadGallery(index) {
     const data = galleryData[index];
+
+    if (!data) return;
 
     popupTitle.textContent = data.title;
 
@@ -35,7 +36,7 @@ function initGallery() {
 
     sliderDots.innerHTML = '';
 
-    /* IMG */
+    /* IMAGES */
     data.images.forEach((img, i) => {
       const image = document.createElement('img');
 
@@ -65,23 +66,25 @@ function initGallery() {
   }
 
   /* OPEN POPUP */
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('.openGallery');
 
-  openGalleryBtns.forEach((btn) => {
-    btn.addEventListener('click', (e) => {
-      e.stopPropagation();
+    if (!btn) return;
 
-      const card = btn.closest('.gallery-card');
+    e.preventDefault();
 
-      currentGallery = parseInt(card.dataset.gallery);
+    const card = btn.closest('.home-gallery-card, .gallery-card');
 
-      loadGallery(currentGallery);
+    if (!card) return;
 
-      galleryPopup.classList.add('active');
-    });
+    currentGallery = parseInt(card.dataset.gallery);
+
+    loadGallery(currentGallery);
+
+    galleryPopup.classList.add('active');
   });
 
   /* NEXT */
-
   nextBtn.addEventListener('click', () => {
     currentGallery++;
 
@@ -93,7 +96,6 @@ function initGallery() {
   });
 
   /* PREV */
-
   prevBtn.addEventListener('click', () => {
     currentGallery--;
 
@@ -105,13 +107,11 @@ function initGallery() {
   });
 
   /* CLOSE */
-
   closeGallery.addEventListener('click', () => {
     galleryPopup.classList.remove('active');
   });
 
   /* CLICK OUTSIDE */
-
   galleryPopup.addEventListener('click', (e) => {
     if (e.target === galleryPopup) {
       galleryPopup.classList.remove('active');
