@@ -1,4 +1,4 @@
-const galleryData = [
+let galleryData = [
   {
     title: 'Kajian Akbar',
 
@@ -136,3 +136,9 @@ const divisiData = [
     desc: 'Divisi Kemuslimahan fokus pada pembinaan muslimah aktif. Syududuuuuuuuuuuuuuu',
   },
 ];
+
+const localGallery = localStorage.getItem('galleryData');
+
+if (localGallery) {
+  galleryData = JSON.parse(localGallery);
+}

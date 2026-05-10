@@ -1,0 +1,162 @@
+/* ========================================= */
+/* SIDEBAR */
+/* ========================================= */
+
+.sidebar,
+.gallery-sidebar {
+  width: 290px;
+
+  background: rgba(47, 79, 47, 0.96);
+
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  padding: 32px 24px;
+
+  display: flex;
+
+  flex-direction: column;
+
+  position: sticky;
+
+  top: 0;
+
+  height: 100vh;
+
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+/* LOGO */
+
+.sidebar-logo h2,
+.gallery-sidebar-logo h2 {
+  color: white;
+
+  font-size: 32px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.4px;
+
+  margin-bottom: 36px;
+}
+
+/* USER */
+
+.sidebar-user {
+  display: flex;
+
+  align-items: center;
+
+  gap: 14px;
+
+  padding: 18px;
+
+  border-radius: 24px;
+
+  background: rgba(255, 255, 255, 0.08);
+
+  margin-bottom: 40px;
+
+  border: 1px solid rgba(255, 255, 255, 0.08);
+
+  min-height: 116px;
+}
+
+.sidebar-avatar {
+  width: 54px;
+
+  height: 54px;
+
+  min-width: 54px;
+
+  border-radius: 50%;
+
+  background: white;
+
+  color: var(--primary);
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  font-weight: 700;
+
+  font-size: 18px;
+}
+
+.sidebar-user h4 {
+  color: white;
+
+  font-size: 15px;
+
+  font-weight: 600;
+
+  margin-bottom: 4px;
+}
+
+.sidebar-user p {
+  color: rgba(255, 255, 255, 0.7);
+
+  font-size: 13px;
+}
+
+/* MENU */
+
+.sidebar-menu,
+.gallery-sidebar-menu {
+  display: flex;
+
+  flex-direction: column;
+
+  gap: 12px;
+}
+
+.sidebar-menu a,
+.gallery-sidebar-menu a {
+  padding: 16px 18px;
+
+  border-radius: 18px;
+
+  color: rgba(255, 255, 255, 0.82);
+
+  font-weight: 500;
+
+  position: relative;
+
+  overflow: hidden;
+}
+
+.sidebar-menu a:hover,
+.sidebar-menu a.active,
+.gallery-sidebar-menu a:hover,
+.gallery-sidebar-menu a.active {
+  background: white;
+
+  color: var(--primary);
+
+  transform: translateX(4px);
+}
+
+.sidebar-menu a.active::before,
+.gallery-sidebar-menu a.active::before {
+  content: '';
+
+  position: absolute;
+
+  left: -24px;
+
+  top: 50%;
+
+  transform: translateY(-50%);
+
+  width: 6px;
+
+  height: 30px;
+
+  border-radius: 999px;
+
+  background: white;
+}

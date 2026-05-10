@@ -1,4 +1,6 @@
-/* TOTAL */
+/* ====================================== */
+/* ELEMENT */
+/* ====================================== */
 
 const totalGallery = document.getElementById('totalGallery');
 
@@ -6,54 +8,100 @@ const totalViews = document.getElementById('totalViews');
 
 const topGallery = document.getElementById('topGallery');
 
-/* TABLE */
-
 const tableBody = document.getElementById('galleryTableBody');
 
+const emptyState = document.getElementById('emptyState');
+
+const searchInput = document.getElementById('searchInput');
+
+/* ====================================== */
+/* INIT */
+/* ====================================== */
+
+updateStats();
+
+renderTable();
+
+initChart();
+
+initSearch();
+
+initLogout();
+
+/* ====================================== */
 /* STATS */
+/* ====================================== */
 
-totalGallery.textContent = galleryData.length;
+function updateStats() {
+  totalGallery.textContent = galleryData.length;
 
-/* TOTAL VIEWS */
+  const views = galleryData.reduce((total, item) => {
+    return total + item.views;
+  }, 0);
 
-const allViews = galleryData.reduce((total, item) => {
-  return total + item.views;
-}, 0);
+  totalViews.textContent = views.toLocaleString();
 
-totalViews.textContent = allViews;
+  const popular = [...galleryData].sort((a, b) => {
+    return b.views - a.views;
+  })[0];
 
-/* MOST POPULAR */
+  topGallery.textContent = popular?.title || '-';
+}
 
-const mostPopular = [...galleryData].sort((a, b) => {
-  return b.views - a.views;
-})[0];
+/* ====================================== */
+/* TABLE */
+/* ====================================== */
 
-topGallery.textContent = mostPopular.title;
-
-/* RENDER TABLE */
-
-function renderTable() {
+function renderTable(data = galleryData) {
   tableBody.innerHTML = '';
 
-  galleryData.forEach((item, index) => {
+  if (data.length === 0) {
+    emptyState.style.display = 'flex';
+
+    return;
+  }
+
+  emptyState.style.display = 'none';
+
+  data.forEach((item, index) => {
     const row = document.createElement('tr');
 
     row.innerHTML = `
     
       <td>
-        <img
-          src="${item.thumbnail}"
-          class="gallery-thumb"
-          alt="${item.title}"
-        />
+
+        <div class="gallery-info">
+
+          <img
+            src="${item.thumbnail}"
+            class="gallery-thumb"
+            alt="${item.title}"
+          />
+
+          <div>
+
+            <h4>
+              ${item.title}
+            </h4>
+
+            <p>
+              ${item.date}
+            </p>
+
+          </div>
+
+        </div>
+
       </td>
 
       <td>
-        ${item.title}
+        <span class="table-badge">
+          ${item.category}
+        </span>
       </td>
 
       <td>
-        ${item.category}
+        ${item.division}
       </td>
 
       <td>
@@ -66,7 +114,6 @@ function renderTable() {
 
           <button
             class="edit-btn"
-            data-index="${index}"
           >
             Edit
           </button>
@@ -90,16 +137,24 @@ function renderTable() {
   initDeleteButtons();
 }
 
+/* ====================================== */
 /* DELETE */
+/* ====================================== */
 
 function initDeleteButtons() {
-  const deleteButtons = document.querySelectorAll('.delete-btn');
+  const buttons = document.querySelectorAll('.delete-btn');
 
-  deleteButtons.forEach((btn) => {
+  buttons.forEach((btn) => {
     btn.addEventListener('click', () => {
       const index = btn.dataset.index;
 
+      const confirmDelete = confirm('Yakin ingin menghapus gallery ini?');
+
+      if (!confirmDelete) return;
+
       galleryData.splice(index, 1);
+
+      localStorage.setItem('galleryData', JSON.stringify(galleryData));
 
       renderTable();
 
@@ -110,94 +165,122 @@ function initDeleteButtons() {
   });
 }
 
-/* UPDATE STATS */
+/* ====================================== */
+/* SEARCH */
+/* ====================================== */
 
-function updateStats() {
-  totalGallery.textContent = galleryData.length;
+function initSearch() {
+  searchInput.addEventListener('input', () => {
+    const keyword = searchInput.value.toLowerCase();
 
-  const total = galleryData.reduce((sum, item) => {
-    return sum + item.views;
-  }, 0);
+    const filtered = galleryData.filter((item) => {
+      return item.title.toLowerCase().includes(keyword) || item.category.toLowerCase().includes(keyword);
+    });
 
-  totalViews.textContent = total;
-
-  const popular = [...galleryData].sort((a, b) => {
-    return b.views - a.views;
-  })[0];
-
-  if (popular) {
-    topGallery.textContent = popular.title;
-  } else {
-    topGallery.textContent = '-';
-  }
+    renderTable(filtered);
+  });
 }
 
+/* ====================================== */
 /* CHART */
+/* ====================================== */
 
-const ctx = document.getElementById('galleryChart');
+let galleryChart;
 
-let galleryChart = new Chart(ctx, {
-  type: 'bar',
+function initChart() {
+  const ctx = document.getElementById('galleryChart');
 
-  data: {
-    labels: galleryData.map((item) => {
-      return item.title;
-    }),
+  const gradient = ctx.getContext('2d').createLinearGradient(0, 0, 0, 400);
 
-    datasets: [
-      {
-        label: 'Jumlah Views',
+  gradient.addColorStop(0, 'rgba(47,79,47,0.9)');
 
-        data: galleryData.map((item) => {
-          return item.views;
-        }),
+  gradient.addColorStop(1, 'rgba(47,79,47,0.2)');
 
-        borderRadius: 12,
-      },
-    ],
-  },
+  galleryChart = new Chart(ctx, {
+    type: 'bar',
 
-  options: {
-    responsive: true,
+    data: {
+      labels: galleryData.map((item) => item.title),
 
-    plugins: {
-      legend: {
-        display: false,
-      },
+      datasets: [
+        {
+          data: galleryData.map((item) => item.views),
+
+          backgroundColor: gradient,
+
+          borderRadius: 16,
+
+          borderSkipped: false,
+
+          maxBarThickness: 56,
+        },
+      ],
     },
 
-    scales: {
-      y: {
-        beginAtZero: true,
+    options: {
+      responsive: true,
+
+      maintainAspectRatio: false,
+
+      animation: {
+        duration: 1200,
+      },
+
+      plugins: {
+        legend: {
+          display: false,
+        },
+
+        tooltip: {
+          backgroundColor: '#2f4f2f',
+
+          padding: 14,
+
+          cornerRadius: 14,
+        },
+      },
+
+      scales: {
+        x: {
+          grid: {
+            display: false,
+          },
+        },
+
+        y: {
+          beginAtZero: true,
+
+          grid: {
+            color: 'rgba(0,0,0,0.05)',
+          },
+        },
       },
     },
-  },
-});
+  });
+}
 
+/* ====================================== */
 /* UPDATE CHART */
+/* ====================================== */
 
 function updateChart() {
-  galleryChart.data.labels = galleryData.map((item) => {
-    return item.title;
-  });
+  galleryChart.data.labels = galleryData.map((item) => item.title);
 
-  galleryChart.data.datasets[0].data = galleryData.map((item) => {
-    return item.views;
-  });
+  galleryChart.data.datasets[0].data = galleryData.map((item) => item.views);
 
   galleryChart.update();
 }
 
-/* INIT */
-
-renderTable();
-
+/* ====================================== */
 /* LOGOUT */
+/* ====================================== */
 
-const logoutBtn = document.getElementById('logoutBtn');
+function initLogout() {
+  const logoutBtn = document.getElementById('logoutBtn');
 
-logoutBtn.addEventListener('click', (e) => {
-  e.preventDefault();
+  logoutBtn.addEventListener('click', (e) => {
+    e.preventDefault();
 
-  window.location.href = 'index.html';
-});
+    window.location.href = 'index.html';
+  });
+}

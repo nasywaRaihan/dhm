@@ -5,18 +5,22 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <title>Tambah Gallery</title>
+    <title>DHM Admin | Tambah Gallery</title>
 
     <!-- FONT -->
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
 
-    <!-- CSS -->
+    <!-- BASE -->
     <link rel="stylesheet" href="assets/css/base.css" />
+
     <!-- TOM SELECT -->
     <link href="https://cdn.jsdelivr.net/npm/tom-select/dist/css/tom-select.css" rel="stylesheet" />
 
     <!-- FLATPICKR -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css" />
+
+    <!-- PAGE CSS -->
+    <link rel="stylesheet" href="assets/css/admin-sidebar.css" />
     <link rel="stylesheet" href="assets/css/gallery-admin.css" />
   </head>
 
@@ -26,6 +30,15 @@
       <aside class="gallery-sidebar">
         <div class="gallery-sidebar-logo">
           <h2>DHM Admin</h2>
+        </div>
+
+        <div class="sidebar-user">
+          <div class="sidebar-avatar">A</div>
+
+          <div>
+            <h4>Admin DHM</h4>
+            <p>Super Admin</p>
+          </div>
         </div>
 
         <nav class="gallery-sidebar-menu">
@@ -42,14 +55,20 @@
         <!-- HEADER -->
         <div class="gallery-admin-header">
           <div>
+            <span class="breadcrumb"> Dashboard / Gallery </span>
+
             <h1>Tambah Gallery</h1>
 
             <p>Tambahkan dokumentasi kegiatan DHM</p>
           </div>
+
+          <div class="header-badge">Active</div>
         </div>
 
-        <!-- FORM -->
+        <!-- FORM BOX -->
         <div class="gallery-form-box">
+          <div class="form-section-title">Informasi Gallery</div>
+
           <form id="galleryForm">
             <!-- TITLE -->
             <div class="form-group">
@@ -58,66 +77,86 @@
               <input type="text" id="galleryTitle" placeholder="Masukkan judul gallery" required />
             </div>
 
-            <!-- CATEGORY -->
-            <div class="form-group">
-              <label> Kategori </label>
+            <!-- ROW -->
+            <div class="form-row">
+              <!-- CATEGORY -->
+              <div class="form-group">
+                <div class="field-top">
+                  <label> Kategori Gallery </label>
 
-              <select id="galleryCategory" placeholder="Pilih kategori" required>
-                <option value="">Pilih Kategori</option>
+                  <span> Wajib </span>
+                </div>
 
-                <option value="Festival">Festival</option>
+                <select id="galleryCategory" required>
+                  <option value="">Pilih Kategori</option>
 
-                <option value="Kajian">Kajian</option>
+                  <option value="Festival">Festival</option>
 
-                <option value="Pengajian">Pengajian</option>
-              </select>
-            </div>
+                  <option value="Kajian">Kajian</option>
 
-            <!-- DIVISION -->
-            <div class="form-group">
-              <label> Divisi </label>
+                  <option value="Pengajian">Pengajian</option>
 
-              <select id="galleryDivision" placeholder="Pilih divisi" required>
-                <option value="">Pilih Divisi</option>
-
-                <option value="PH">PH</option>
-
-                <option value="HUMMED">HUMMED</option>
-
-                <option value="PS">PS</option>
-
-                <option value="PM">PM</option>
-
-                <option value="PSDI">PSDI</option>
-              </select>
-            </div>
-
-            <!-- DATE -->
-            <div class="form-group">
-              <label> Tanggal </label>
-
-              <input type="date" id="galleryDate" placeholder="Pilih tanggal" required />
-            </div>
-
-            <!-- THUMBNAIL -->
-            <div class="form-group">
-              <label> Thumbnail Gallery </label>
-
-              <div class="upload-box">
-                <input type="file" id="galleryThumbnail" accept="image/*" hidden />
-
-                <label for="galleryThumbnail" class="upload-label">
-                  <span class="upload-icon"> ⬆ </span>
-
-                  <p>Upload Thumbnail Gallery</p>
-
-                  <small> PNG, JPG, JPEG </small>
-                </label>
+                  <option value="Dauroh">Dauroh</option>
+                </select>
               </div>
 
-              <!-- PREVIEW -->
-              <img id="thumbnailPreview" class="thumbnail-preview" alt="Thumbnail Preview" />
+              <!-- DIVISION -->
+              <div class="form-group">
+                <div class="field-top">
+                  <label> Divisi </label>
+
+                  <span> Wajib </span>
+                </div>
+
+                <select id="galleryDivision" required>
+                  <option value="">Pilih Divisi</option>
+
+                  <option value="PH">PH</option>
+
+                  <option value="HUMMED">HUMMED</option>
+
+                  <option value="PS">PS</option>
+
+                  <option value="PM">PM</option>
+
+                  <option value="PSDI">PSDI</option>
+                </select>
+              </div>
             </div>
+
+            <!-- ROW -->
+            <div class="form-row">
+              <!-- DATE -->
+              <div class="form-group">
+                <div class="field-top">
+                  <label> Tanggal Kegiatan </label>
+
+                  <span> Wajib </span>
+                </div>
+
+                <input type="text" id="galleryDate" placeholder="Pilih tanggal kegiatan" required />
+              </div>
+
+              <!-- THUMB -->
+              <div class="form-group">
+                <label> Thumbnail </label>
+
+                <div class="upload-box">
+                  <input type="file" id="galleryThumbnail" accept="image/*" hidden />
+
+                  <label for="galleryThumbnail" class="upload-label">
+                    <span class="upload-icon"> ⬆ </span>
+
+                    <p>Upload Thumbnail</p>
+
+                    <small> PNG, JPG, WEBP • Max 2MB </small>
+                  </label>
+                </div>
+              </div>
+            </div>
+
+            <!-- PREVIEW -->
+            <img id="thumbnailPreview" class="thumbnail-preview" alt="Thumbnail Preview" />
 
             <!-- DESCRIPTION -->
             <div class="form-group">
@@ -127,7 +166,9 @@
             </div>
 
             <!-- BUTTON -->
-            <button type="submit" class="submit-gallery-btn">Simpan Gallery</button>
+            <button type="submit" class="submit-gallery-btn">
+              <span> Simpan Gallery </span>
+            </button>
           </form>
         </div>
       </main>

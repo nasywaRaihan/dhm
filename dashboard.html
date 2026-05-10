@@ -15,6 +15,8 @@
 
     <!-- CSS -->
     <link rel="stylesheet" href="assets/css/base.css" />
+
+    <link rel="stylesheet" href="assets/css/admin-sidebar.css" />
     <link rel="stylesheet" href="assets/css/dashboard.css" />
   </head>
 
@@ -26,10 +28,20 @@
           <h2>DHM Admin</h2>
         </div>
 
+        <div class="sidebar-user">
+          <div class="sidebar-avatar">A</div>
+
+          <div>
+            <h4>Admin DHM</h4>
+
+            <p>Super Admin</p>
+          </div>
+        </div>
+
         <nav class="sidebar-menu">
           <a href="#" class="active"> Dashboard </a>
 
-          <a href="gallery-admin.html"> Gallery </a>
+          <a href="gallery-admin.html"> Tambah Gallery </a>
 
           <a href="#" id="logoutBtn"> Logout </a>
         </nav>
@@ -40,72 +52,105 @@
         <!-- TOPBAR -->
         <header class="dashboard-topbar">
           <div>
+            <span class="breadcrumb"> Dashboard / Analytics </span>
+
             <h1>Gallery Dashboard</h1>
 
             <p>Monitoring statistik gallery DHM</p>
           </div>
 
-          <div class="admin-profile">A</div>
+          <a href="gallery-admin.html" class="add-gallery-btn"> + Tambah Gallery </a>
         </header>
 
         <!-- STATS -->
         <section class="stats-grid">
           <div class="stats-card">
-            <h3 id="totalGallery">0</h3>
+            <div class="stats-icon">📁</div>
 
-            <p>Total Gallery</p>
+            <div>
+              <h3 id="totalGallery">0</h3>
+
+              <p>Total Gallery</p>
+            </div>
           </div>
 
           <div class="stats-card">
-            <h3 id="totalViews">0</h3>
+            <div class="stats-icon">👁</div>
 
-            <p>Total Pengunjung</p>
+            <div>
+              <h3 id="totalViews">0</h3>
+
+              <p>Total Pengunjung</p>
+            </div>
           </div>
 
           <div class="stats-card">
-            <h3 id="topGallery">-</h3>
+            <div class="stats-icon">🔥</div>
 
-            <p>Gallery Terpopuler</p>
+            <div>
+              <h3 id="topGallery">-</h3>
+
+              <p>Gallery Terpopuler</p>
+            </div>
           </div>
         </section>
 
         <!-- CHART -->
-        <section class="dashboard-box chart-box">
-          <div class="chart-header">
+        <section class="dashboard-box">
+          <div class="box-header">
             <div>
-              <h2>Statistik Kunjungan Gallery</h2>
+              <h2>Statistik Views</h2>
 
-              <p>Berdasarkan jumlah views tiap gallery</p>
+              <p>Berdasarkan jumlah views gallery</p>
             </div>
-
-            <button class="add-gallery-btn">+ Tambah Gallery</button>
           </div>
 
-          <canvas id="galleryChart"></canvas>
+          <div class="chart-wrapper">
+            <canvas id="galleryChart"></canvas>
+          </div>
         </section>
 
         <!-- TABLE -->
-        <section class="dashboard-box gallery-table-box" id="galleryTable">
-          <div class="table-header">
-            <h2>Data Gallery</h2>
+        <section class="dashboard-box">
+          <div class="box-header">
+            <div>
+              <h2>Data Gallery</h2>
+
+              <p>Semua data dokumentasi kegiatan</p>
+            </div>
+
+            <div class="search-box">
+              <span> 🔍 </span>
+
+              <input type="text" id="searchInput" class="search-input" placeholder="Cari gallery..." />
+            </div>
           </div>
 
           <div class="gallery-table-wrapper">
             <table class="gallery-table">
               <thead>
                 <tr>
-                  <th>Thumbnail</th>
-                  <th>Judul</th>
+                  <th>Gallery</th>
+
                   <th>Kategori</th>
+
+                  <th>Divisi</th>
+
                   <th>Views</th>
+
                   <th>Aksi</th>
                 </tr>
               </thead>
 
-              <tbody id="galleryTableBody">
-                <!-- JS -->
-              </tbody>
+              <tbody id="galleryTableBody"></tbody>
             </table>
+          </div>
+
+          <!-- EMPTY -->
+          <div class="empty-state" id="emptyState">
+            <h3>Belum Ada Gallery</h3>
+
+            <p>Tambahkan gallery pertama kamu</p>
           </div>
         </section>
       </main>

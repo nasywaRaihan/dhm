@@ -1,109 +1,217 @@
-/* ========================= */
-/* TOM SELECT */
-/* ========================= */
+/* ===================================== */
+/* ELEMENT */
+/* ===================================== */
 
-new TomSelect('#galleryCategory', {
-  create: false,
+const galleryForm = document.getElementById('galleryForm');
 
-  controlInput: null,
-
-  placeholder: 'Masukkan kategori',
-});
-
-new TomSelect('#galleryDivision', {
-  create: false,
-
-  controlInput: null,
-
-  placeholder: 'Masukkan divisi',
-});
-
-/* ========================= */
-/* FLATPICKR */
-/* ========================= */
-
-flatpickr('#galleryDate', {
-  dateFormat: 'd F Y',
-
-  altInput: true,
-
-  altFormat: 'd F Y',
-
-  disableMobile: true,
-
-  position: 'auto center',
-});
-
-/* THUMBNAIL PREVIEW */
 const thumbnailInput = document.getElementById('galleryThumbnail');
 
 const thumbnailPreview = document.getElementById('thumbnailPreview');
 
+const submitBtn = document.querySelector('.submit-gallery-btn');
+
+/* ===================================== */
+/* STATE */
+/* ===================================== */
+
 let thumbnailData = '';
 
-thumbnailInput.addEventListener('change', (e) => {
-  const file = e.target.files[0];
+/* ===================================== */
+/* INIT */
+/* ===================================== */
 
-  if (!file) return;
+initSelect();
 
-  const reader = new FileReader();
+initDatepicker();
 
-  reader.onload = function (event) {
-    thumbnailData = event.target.result;
+handleThumbnail();
 
-    thumbnailPreview.src = thumbnailData;
+handleSubmit();
 
-    thumbnailPreview.style.display = 'block';
-  };
+/* ===================================== */
+/* TOM SELECT */
+/* ===================================== */
 
-  reader.readAsDataURL(file);
-});
+function initSelect() {
+  new TomSelect('#galleryCategory', {
+    create: false,
+    controlInput: null,
+    placeholder: 'Pilih kategori',
+  });
 
-const galleryForm = document.getElementById('galleryForm');
+  new TomSelect('#galleryDivision', {
+    create: false,
+    controlInput: null,
+    placeholder: 'Pilih divisi',
+  });
+}
 
-galleryForm.addEventListener('submit', (e) => {
-  e.preventDefault();
+/* ===================================== */
+/* DATEPICKER */
+/* ===================================== */
 
-  const title = document.getElementById('galleryTitle').value;
+function initDatepicker() {
+  flatpickr('#galleryDate', {
+    dateFormat: 'd F Y',
 
-  const category = document.getElementById('galleryCategory').value;
+    altInput: true,
 
-  const division = document.getElementById('galleryDivision').value;
+    altFormat: 'd F Y',
 
-  const date = document.getElementById('galleryDate').value;
+    disableMobile: true,
 
-  const thumbnail = thumbnailData;
+    position: 'auto center',
+  });
+}
 
-  const desc = document.getElementById('galleryDesc').value;
+/* ===================================== */
+/* THUMBNAIL */
+/* ===================================== */
 
-  /* SLUG */
+function handleThumbnail() {
+  thumbnailInput.addEventListener('change', (e) => {
+    const file = e.target.files[0];
 
-  const slug = title.toLowerCase().replaceAll(' ', '-');
+    if (!file) return;
 
-  /* NEW DATA */
+    const allowedTypes = ['image/jpeg', 'image/png', 'image/webp'];
 
-  const newGallery = {
-    title,
-    slug,
-    category,
-    division,
-    thumbnail,
-    date,
+    if (!allowedTypes.includes(file.type)) {
+      showError('Format file tidak didukung!');
 
-    views: 0,
+      return;
+    }
 
-    desc,
+    if (file.size > 2 * 1024 * 1024) {
+      showError('Ukuran gambar maksimal 2MB!');
 
-    images: [thumbnail],
-  };
+      return;
+    }
 
-  /* PUSH */
+    const reader = new FileReader();
 
-  galleryData.push(newGallery);
+    reader.onload = function (event) {
+      thumbnailData = event.target.result;
 
-  console.log(galleryData);
+      thumbnailPreview.src = thumbnailData;
 
-  alert('Gallery berhasil ditambahkan!');
+      thumbnailPreview.style.display = 'block';
+    };
 
-  galleryForm.reset();
-});
+    reader.readAsDataURL(file);
+  });
+}
+
+/* ===================================== */
+/* SUBMIT */
+/* ===================================== */
+
+function handleSubmit() {
+  galleryForm.addEventListener('submit', (e) => {
+    e.preventDefault();
+
+    const title = document.getElementById('galleryTitle').value.trim();
+
+    const category = document.getElementById('galleryCategory').value;
+
+    const division = document.getElementById('galleryDivision').value;
+
+    const date = document.getElementById('galleryDate').value;
+
+    const desc = document.getElementById('galleryDesc').value.trim();
+
+    if (!thumbnailData) {
+      showError('Thumbnail wajib diupload!');
+
+      return;
+    }
+
+    /* SLUG */
+
+    const slug = title
+      .toLowerCase()
+      .trim()
+      .replace(/[^\w\s-]/g, '')
+      .replace(/\s+/g, '-');
+
+    /* DUPLICATE */
+
+    const isExist = galleryData.some((item) => item.slug === slug);
+
+    if (isExist) {
+      showError('Gallery sudah ada!');
+
+      return;
+    }
+
+    /* NEW DATA */
+
+    const newGallery = {
+      title,
+
+      slug,
+
+      category,
+
+      division,
+
+      thumbnail: thumbnailData,
+
+      date,
+
+      views: 0,
+
+      desc,
+
+      images: [thumbnailData],
+    };
+
+    /* PUSH */
+
+    galleryData.push(newGallery);
+
+    /* SAVE */
+
+    localStorage.setItem('galleryData', JSON.stringify(galleryData));
+
+    /* SUCCESS */
+
+    showSuccess('Gallery berhasil ditambahkan!');
+
+    /* RESET */
+
+    galleryForm.reset();
+
+    thumbnailPreview.style.display = 'none';
+
+    thumbnailPreview.src = '';
+
+    thumbnailData = '';
+
+    submitBtn.innerHTML = '<span>Simpan Gallery</span>';
+  });
+}
+
+/* ===================================== */
+/* SUCCESS */
+/* ===================================== */
+
+function showSuccess(message) {
+  submitBtn.innerHTML = 'Berhasil Disimpan ✓';
+
+  submitBtn.classList.add('success');
+
+  setTimeout(() => {
+    submitBtn.classList.remove('success');
+
+    submitBtn.innerHTML = '<span>Simpan Gallery</span>';
+  }, 2000);
+}
+
+/* ===================================== */
+/* ERROR */
+/* ===================================== */
+
+function showError(message) {
+  alert(message);
+}

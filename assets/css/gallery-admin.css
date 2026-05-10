@@ -1,13 +1,88 @@
+/* ========================================= */
+/* RESET */
+/* ========================================= */
+
+* {
+  margin: 0;
+
+  padding: 0;
+
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+* {
+  transition:
+    background 0.25s ease,
+    border 0.25s ease,
+    color 0.25s ease,
+    box-shadow 0.25s ease,
+    transform 0.25s ease;
+}
+
+/* ========================================= */
+/* ROOT */
+/* ========================================= */
+
+:root {
+  --surface: rgba(255, 255, 255, 0.78);
+
+  --surface-strong: rgba(255, 255, 255, 0.94);
+
+  --border-soft: rgba(255, 255, 255, 0.7);
+
+  --shadow-soft: 0 18px 40px rgba(0, 0, 0, 0.05);
+
+  --shadow-hover: 0 24px 50px rgba(0, 0, 0, 0.08);
+}
+
+/* ========================================= */
+/* BODY */
+/* ========================================= */
+
 body {
   font-family: 'Poppins', sans-serif;
 
-  background: linear-gradient(rgba(249, 251, 248, 0.94), rgba(249, 251, 248, 0.94)), linear-gradient(#dde5dd 1px, transparent 1px), linear-gradient(90deg, #dde5dd 1px, transparent 1px);
+  background: linear-gradient(rgba(249, 251, 248, 0.96), rgba(249, 251, 248, 0.96)), linear-gradient(#dde5dd 1px, transparent 1px), linear-gradient(90deg, #dde5dd 1px, transparent 1px);
 
   background-size:
     100%,
     40px 40px,
     40px 40px;
+
+  color: var(--text-dark);
+
+  overflow-x: hidden;
 }
+
+/* ========================================= */
+/* SCROLLBAR */
+/* ========================================= */
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.03);
+}
+
+::-webkit-scrollbar-thumb {
+  background: rgba(47, 79, 47, 0.25);
+
+  border-radius: 999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(47, 79, 47, 0.45);
+}
+
+/* ========================================= */
+/* LAYOUT */
+/* ========================================= */
 
 .gallery-admin-layout {
   display: flex;
@@ -15,74 +90,46 @@ body {
   min-height: 100vh;
 }
 
-/* SIDEBAR */
-
-.gallery-sidebar {
-  width: 280px;
-
-  background: rgba(63, 95, 63, 0.92);
-
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-
-  padding: 30px 24px;
-
-  display: flex;
-  flex-direction: column;
-}
-
-.gallery-sidebar-logo h2 {
-  color: white;
-
-  font-size: 30px;
-
-  margin-bottom: 50px;
-}
-
-.gallery-sidebar-menu {
-  display: flex;
-  flex-direction: column;
-
-  gap: 14px;
-}
-
-.gallery-sidebar-menu a {
-  padding: 14px 18px;
-
-  border-radius: 18px;
-
-  color: rgba(255, 255, 255, 0.82);
-
-  transition: 0.3s ease;
-
-  font-weight: 500;
-}
-
-.gallery-sidebar-menu a:hover,
-.gallery-sidebar-menu a.active {
-  background: white;
-
-  color: var(--primary);
-
-  transform: translateX(4px);
-}
-
+/* ========================================= */
 /* MAIN */
+/* ========================================= */
 
 .gallery-admin-main {
   flex: 1;
 
-  padding: 40px;
+  padding: 42px;
 }
 
+/* ========================================= */
 /* HEADER */
+/* ========================================= */
 
 .gallery-admin-header {
-  margin-bottom: 30px;
+  display: flex;
+
+  justify-content: space-between;
+
+  align-items: flex-start;
+
+  gap: 20px;
+
+  margin-bottom: 34px;
+}
+
+.breadcrumb {
+  display: inline-block;
+
+  font-size: 13px;
+
+  color: var(--text-soft);
+
+  margin-bottom: 12px;
 }
 
 .gallery-admin-header h1 {
-  font-size: 42px;
+  font-size: 46px;
+
+  line-height: 1.1;
 
   color: var(--primary);
 
@@ -91,43 +138,144 @@ body {
 
 .gallery-admin-header p {
   color: var(--text-soft);
+
+  font-size: 15px;
 }
 
-/* FORM */
+.header-badge {
+  padding: 12px 18px;
+
+  border-radius: 999px;
+
+  background: rgba(47, 79, 47, 0.08);
+
+  color: var(--primary);
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  white-space: nowrap;
+}
+
+/* ========================================= */
+/* FORM BOX */
+/* ========================================= */
 
 .gallery-form-box {
-  background: rgba(255, 255, 255, 0.76);
+  max-width: 1040px;
 
-  backdrop-filter: blur(16px);
-  -webkit-backdrop-filter: blur(16px);
-  overflow: visible;
+  background: var(--surface);
 
-  border-radius: 30px;
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
 
-  padding: 34px;
+  border-radius: 36px;
 
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
+  padding: 42px;
+
+  border: 1px solid var(--border-soft);
+
+  box-shadow: var(--shadow-soft);
+
+  position: relative;
+
+  overflow: hidden;
 }
+
+.gallery-form-box::before {
+  content: '';
+
+  position: absolute;
+
+  inset: 0;
+
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.25), transparent 40%);
+
+  pointer-events: none;
+}
+
+.form-section-title {
+  font-size: 22px;
+
+  font-weight: 700;
+
+  color: var(--primary);
+
+  margin-bottom: 34px;
+}
+
+/* ========================================= */
+/* FORM */
+/* ========================================= */
 
 #galleryForm {
   display: flex;
+
   flex-direction: column;
 
-  gap: 24px;
+  gap: 28px;
+}
+
+.form-row {
+  display: grid;
+
+  grid-template-columns: 1fr 1fr;
+
+  gap: 22px;
 }
 
 .form-group {
   display: flex;
+
   flex-direction: column;
 
-  gap: 10px;
+  gap: 12px;
+
+  position: relative;
 }
 
-.form-group label {
-  font-weight: 600;
+/* ========================================= */
+/* FIELD TOP */
+/* ========================================= */
+
+.field-top {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+}
+
+.field-top label {
+  font-size: 13px;
+
+  font-weight: 700;
+
+  letter-spacing: 0.6px;
+
+  text-transform: uppercase;
 
   color: var(--primary);
 }
+
+.field-top span {
+  font-size: 12px;
+
+  font-weight: 600;
+
+  color: var(--primary);
+
+  padding: 6px 10px;
+
+  border-radius: 999px;
+
+  background: rgba(47, 79, 47, 0.08);
+}
+
+/* ========================================= */
+/* INPUT */
+/* ========================================= */
 
 .form-group input,
 .form-group textarea {
@@ -135,229 +283,354 @@ body {
 
   border: 1.5px solid transparent;
 
-  border-radius: 22px;
+  border-radius: 26px;
 
-  padding: 18px 22px;
+  padding: 20px 22px;
 
-  background: rgba(255, 255, 255, 0.78);
-
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(248, 250, 248, 0.94));
 
   font-size: 15px;
 
-  transition: 0.3s ease;
+  font-weight: 500;
 
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
+  color: var(--text-dark);
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    0 12px 28px rgba(0, 0, 0, 0.04);
 }
 
 .form-group textarea {
-  min-height: 140px;
+  min-height: 170px;
 
   resize: vertical;
+
+  line-height: 1.7;
+}
+
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: #97a097;
+}
+
+.form-group input:hover,
+.form-group textarea:hover {
+  transform: translateY(-2px);
+
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.06);
 }
 
 .form-group input:focus,
 .form-group textarea:focus {
-  box-shadow: 0 0 0 4px rgba(47, 79, 47, 0.08);
+  border-color: rgba(47, 79, 47, 0.14);
+
+  transform: translateY(-2px);
+
+  box-shadow:
+    0 0 0 6px rgba(47, 79, 47, 0.08),
+    0 18px 40px rgba(0, 0, 0, 0.06);
 }
 
-/* BUTTON */
+/* ========================================= */
+/* PREMIUM SELECT */
+/* ========================================= */
 
-.submit-gallery-btn {
-  border: none;
-
-  padding: 18px;
-
-  border-radius: 18px;
-
-  background: linear-gradient(135deg, #6f946f, var(--primary));
-
-  color: white;
-
-  font-size: 15px;
-
-  font-weight: 600;
-
-  cursor: pointer;
-
-  transition: 0.3s ease;
-}
-
-.submit-gallery-btn:hover {
-  transform: translateY(-4px);
-}
-
-.form-group select,
-
-/* DATE INPUT */
-
-.flatpickr-input {
-  width: 100%;
-
-  height: 64px;
-
-  border: none;
-
-  border-radius: 22px;
-
-  padding: 0 22px;
-
-  background: rgba(255, 255, 255, 0.82);
-
-  font-size: 15px;
-
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
-
-  cursor: pointer;
-}
-
-/* DATE WRAPPER */
-
-.form-group {
+.ts-wrapper {
   position: relative;
 }
 
-/* CALENDAR ICON */
-
-.form-group:has(#galleryDate)::after {
-  content: '📅';
+.ts-wrapper::after {
+  content: '';
 
   position: absolute;
 
-  right: 22px;
+  right: 24px;
 
-  top: 58px;
+  top: 50%;
 
-  font-size: 18px;
+  width: 10px;
 
-  opacity: 0.7;
+  height: 10px;
+
+  border-right: 2px solid var(--primary);
+
+  border-bottom: 2px solid var(--primary);
+
+  transform: translateY(-70%) rotate(45deg);
 
   pointer-events: none;
 }
 
-/* SELECT */
+.ts-wrapper.focus::after {
+  transform: translateY(-20%) rotate(-135deg);
+}
 
-.form-group select {
-  width: 100%;
+.ts-control {
+  min-height: 70px !important;
 
-  height: 64px;
+  border-radius: 26px !important;
 
-  border: none;
+  border: 1.5px solid transparent !important;
 
-  border-radius: 22px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(248, 250, 248, 0.94)) !important;
 
-  padding: 0 22px;
-
-  background: rgba(255, 255, 255, 0.82);
+  padding: 20px 60px 20px 22px !important;
 
   font-size: 15px;
 
-  color: var(--text-dark);
+  font-weight: 500;
 
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
-
-  cursor: pointer;
-
-  transition: 0.3s ease;
-
-  appearance: none;
-  -webkit-appearance: none;
-  -moz-appearance: none;
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    0 12px 28px rgba(0, 0, 0, 0.04);
 }
 
-/* SELECT FOCUS */
+.ts-control:hover {
+  transform: translateY(-2px);
 
-.form-group select:focus {
-  box-shadow: 0 0 0 6px rgba(47, 79, 47, 0.08);
+  box-shadow: 0 18px 36px rgba(0, 0, 0, 0.06);
+}
+
+.ts-wrapper.focus .ts-control {
+  border-color: rgba(47, 79, 47, 0.14) !important;
 
   transform: translateY(-2px);
+
+  box-shadow:
+    0 0 0 6px rgba(47, 79, 47, 0.08),
+    0 18px 40px rgba(0, 0, 0, 0.06) !important;
 }
 
-/* SELECT ICON */
+.ts-dropdown {
+  margin-top: 14px;
 
-.form-group:has(select)::after {
-  content: '⌄';
+  border: none !important;
+
+  border-radius: 30px !important;
+
+  padding: 10px;
+
+  overflow: hidden;
+
+  background: rgba(255, 255, 255, 0.94) !important;
+
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.12);
+}
+
+.ts-dropdown .option {
+  min-height: 58px;
+
+  display: flex;
+
+  align-items: center;
+
+  padding: 0 18px !important;
+
+  border-radius: 18px;
+
+  font-size: 15px;
+
+  font-weight: 500;
+}
+
+.ts-dropdown .option:hover {
+  background: rgba(47, 79, 47, 0.08) !important;
+
+  color: var(--primary);
+}
+
+.ts-dropdown .active {
+  background: linear-gradient(135deg, rgba(47, 79, 47, 0.12), rgba(47, 79, 47, 0.05)) !important;
+
+  color: var(--primary) !important;
+}
+
+.ts-control .item {
+  color: var(--text-dark);
+}
+
+.ts-placeholder {
+  color: #97a097 !important;
+}
+
+/* ========================================= */
+/* DATEPICKER */
+/* ========================================= */
+
+.flatpickr-input {
+  height: 70px;
+
+  border-radius: 26px !important;
+
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.98), rgba(248, 250, 248, 0.94)) !important;
+
+  padding: 0 58px 0 22px !important;
+
+  font-weight: 500;
+
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.8),
+    0 12px 28px rgba(0, 0, 0, 0.04);
+}
+
+.form-group:has(#galleryDate)::after {
+  content: '';
 
   position: absolute;
 
-  right: 22px;
+  right: 24px;
 
-  top: 58px;
+  top: 61px;
 
-  font-size: 20px;
+  width: 20px;
 
-  color: var(--primary);
+  height: 20px;
+
+  opacity: 0.7;
+
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%232f4f2f' stroke-width='2'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' d='M8 7V3m8 4V3m-9 8h10m-13 9h16a2 2 0 002-2V7a2 2 0 00-2-2H4a2 2 0 00-2 2v11a2 2 0 002 2z'/%3E%3C/svg%3E");
+
+  background-size: contain;
 
   pointer-events: none;
 }
 
-/* DATE ICON */
+.flatpickr-calendar {
+  width: 340px !important;
 
-.form-group input[type='date']::-webkit-calendar-picker-indicator {
+  border: none !important;
+
+  border-radius: 34px !important;
+
+  overflow: hidden;
+
+  padding: 18px;
+
+  background: rgba(255, 255, 255, 0.95);
+
+  backdrop-filter: blur(24px);
+  -webkit-backdrop-filter: blur(24px);
+
+  box-shadow: 0 30px 80px rgba(0, 0, 0, 0.14);
+
+  animation: calendarFade 0.25s ease;
+}
+
+@keyframes calendarFade {
+  from {
+    opacity: 0;
+
+    transform: translateY(10px) scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateY(0) scale(1);
+  }
+}
+
+.flatpickr-months {
+  margin-bottom: 18px;
+}
+
+.flatpickr-current-month {
+  font-size: 18px !important;
+
+  font-weight: 700;
+}
+
+.flatpickr-weekday {
+  color: var(--primary) !important;
+
+  font-weight: 700;
+
   opacity: 0.7;
-
-  cursor: pointer;
-
-  transform: scale(1.2);
 }
 
-/* FOCUS */
-
-.form-group select:focus,
-.form-group input[type='date']:focus {
-  border-color: rgba(47, 79, 47, 0.18);
-
-  box-shadow: 0 0 0 6px rgba(47, 79, 47, 0.08);
-
-  transform: translateY(-2px);
+.flatpickr-day {
+  border-radius: 16px !important;
 }
 
-/* OPTION */
-
-.form-group option {
-  background: white;
-
-  color: var(--text-dark);
+.flatpickr-day:hover {
+  background: rgba(47, 79, 47, 0.08);
 }
 
+.flatpickr-day.selected {
+  background: linear-gradient(135deg, #5f865f, var(--primary)) !important;
+
+  border: none !important;
+
+  color: white !important;
+
+  box-shadow: 0 10px 24px rgba(47, 79, 47, 0.25);
+}
+
+/* ========================================= */
 /* UPLOAD */
+/* ========================================= */
 
 .upload-box {
   width: 100%;
 }
 
 .upload-label {
-  height: 220px;
+  height: 210px;
 
-  border-radius: 28px;
+  border-radius: 30px;
 
   border: 2px dashed rgba(47, 79, 47, 0.2);
 
   background: rgba(47, 79, 47, 0.03);
 
   display: flex;
+
   flex-direction: column;
 
   align-items: center;
+
   justify-content: center;
 
   gap: 12px;
 
   cursor: pointer;
 
-  transition: 0.3s ease;
+  position: relative;
+
+  overflow: hidden;
+}
+
+.upload-label::before {
+  content: '';
+
+  position: absolute;
+
+  inset: 0;
+
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.15), transparent);
+
+  opacity: 0;
+}
+
+.upload-label:hover::before {
+  opacity: 1;
 }
 
 .upload-label:hover {
   background: rgba(47, 79, 47, 0.06);
 
   transform: translateY(-4px);
+
+  box-shadow: var(--shadow-hover);
 }
 
 .upload-icon {
-  width: 60px;
-  height: 60px;
+  width: 66px;
+
+  height: 66px;
 
   border-radius: 50%;
 
@@ -366,180 +639,215 @@ body {
   color: white;
 
   display: flex;
+
   align-items: center;
+
   justify-content: center;
 
   font-size: 24px;
+
+  box-shadow: 0 12px 28px rgba(47, 79, 47, 0.2);
 }
 
 .upload-label p {
   font-weight: 600;
 
   color: var(--primary);
+
+  font-size: 15px;
 }
 
 .upload-label small {
   color: var(--text-soft);
+
+  font-size: 13px;
 }
 
+/* ========================================= */
 /* PREVIEW */
+/* ========================================= */
 
 .thumbnail-preview {
   width: 100%;
 
-  max-height: 320px;
+  max-height: 340px;
 
   object-fit: cover;
 
-  border-radius: 24px;
-
-  margin-top: 20px;
+  border-radius: 30px;
 
   display: none;
-}
 
-/* ========================= */
-/* TOM SELECT */
-/* ========================= */
-
-.ts-control {
-  min-height: 64px !important;
-
-  border-radius: 22px !important;
-
-  border: none !important;
-
-  background: rgba(255, 255, 255, 0.82) !important;
-
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-
-  padding: 18px 20px !important;
-
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.04);
-
-  font-size: 15px;
-}
-
-.ts-control:focus-within {
-  box-shadow: 0 0 0 6px rgba(47, 79, 47, 0.08) !important;
-}
-
-.ts-dropdown {
-  border: none !important;
-
-  border-radius: 22px !important;
-
-  overflow: hidden;
-
-  margin-top: 10px;
+  margin-top: -6px;
 
   box-shadow: 0 18px 40px rgba(0, 0, 0, 0.08);
 }
 
-.ts-dropdown .option {
-  padding: 16px 20px !important;
+/* ========================================= */
+/* BUTTON */
+/* ========================================= */
 
-  font-size: 15px;
+.submit-gallery-btn {
+  border: none;
 
-  transition: 0.2s ease;
+  min-height: 68px;
+
+  border-radius: 24px;
+
+  background: linear-gradient(135deg, #6f946f, var(--primary));
+
+  color: white;
+
+  font-size: 16px;
+
+  font-weight: 600;
+
+  letter-spacing: 0.3px;
+
+  cursor: pointer;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  box-shadow: 0 16px 36px rgba(47, 79, 47, 0.22);
 }
 
-.ts-dropdown .option:hover,
-.ts-dropdown .active {
-  background: rgba(47, 79, 47, 0.08) !important;
+.submit-gallery-btn:hover {
+  transform: translateY(-4px);
 
-  color: var(--primary) !important;
+  box-shadow: 0 22px 44px rgba(47, 79, 47, 0.3);
 }
 
-/* ========================= */
-/* FLATPICKR */
-/* ========================= */
-
-.flatpickr-calendar {
-  border: none !important;
-
-  border-radius: 24px !important;
-
-  overflow: hidden;
-
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.12);
-
-  padding: 10px;
+.submit-gallery-btn.success {
+  background: linear-gradient(135deg, #3ca55c, #2f7d32) !important;
 }
 
-.flatpickr-day.selected {
-  background: var(--primary) !important;
+/* ========================================= */
+/* ANIMATION */
+/* ========================================= */
 
-  border-color: var(--primary) !important;
+.gallery-form-box,
+.form-group,
+.upload-label {
+  animation: fadeUp 0.5s ease;
 }
 
-.flatpickr-day:hover {
-  background: rgba(47, 79, 47, 0.08);
+@keyframes fadeUp {
+  from {
+    opacity: 0;
+
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+
+    transform: translateY(0);
+  }
 }
 
-.flatpickr-months {
-  margin-bottom: 10px;
-}
-
-.flatpickr-calendar {
-  z-index: 999999 !important;
-}
-
-/* PLACEHOLDER */
-
-.ts-control input::placeholder {
-  color: var(--text-soft);
-}
-
-.ts-placeholder {
-  color: var(--text-soft) !important;
-}
-
-.ts-wrapper.single .ts-control::after {
-  border-color: var(--primary) transparent transparent transparent !important;
-
-  right: 20px;
-}
-
-.ts-control .item {
-  color: var(--text-dark);
-}
-
-.ts-control .placeholder {
-  color: #9aa09a !important;
-
-  opacity: 1 !important;
-}
-
-.flatpickr-calendar {
-  width: 320px !important;
-
-  border-radius: 28px !important;
-
-  overflow: hidden;
-}
-
+/* ========================================= */
 /* MOBILE */
+/* ========================================= */
 
 @media (max-width: 768px) {
+  /* LAYOUT */
   .gallery-admin-layout {
     flex-direction: column;
   }
 
+  /* SIDEBAR */
   .gallery-sidebar {
+    width: 100%;
+
+    height: auto;
+
+    position: relative;
+
+    padding: 24px 22px;
+
+    border-right: none;
+  }
+
+  /* USER */
+  .sidebar-user {
+    margin-bottom: 28px;
+
+    min-height: auto;
+  }
+
+  /* MENU */
+  .gallery-sidebar-menu {
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+  }
+
+  .gallery-sidebar-menu a {
     width: 100%;
   }
 
+  /* MAIN */
   .gallery-admin-main {
-    padding: 20px;
+    padding: 22px;
+  }
+
+  /* HEADER */
+  .gallery-admin-header {
+    flex-direction: column;
+
+    align-items: flex-start;
+
+    gap: 14px;
   }
 
   .gallery-admin-header h1 {
-    font-size: 34px;
+    font-size: 36px;
   }
 
+  .header-badge {
+    padding: 10px 16px;
+
+    font-size: 13px;
+  }
+
+  /* FORM */
   .gallery-form-box {
+    max-width: 100%;
+
     padding: 24px;
+
+    border-radius: 28px;
+  }
+
+  .form-row {
+    grid-template-columns: 1fr;
+
+    gap: 20px;
+  }
+
+  /* INPUT */
+  .form-group input,
+  .form-group textarea,
+  .ts-control,
+  .flatpickr-input {
+    border-radius: 22px !important;
+  }
+
+  /* UPLOAD */
+  .upload-label {
+    height: 180px;
+  }
+
+  /* BUTTON */
+  .submit-gallery-btn {
+    min-height: 62px;
+
+    border-radius: 22px;
   }
 }
