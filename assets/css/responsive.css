@@ -625,6 +625,14 @@
   .divisi-modal-content img {
     height: 220px;
   }
+
+  .youtube-featured {
+    margin-top: 30px;
+  }
+
+  .youtube-video-wrapper {
+    border-radius: 22px;
+  }
 }
 
 /* HP KECIL */
