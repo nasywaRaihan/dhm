@@ -189,6 +189,47 @@
   margin-top: 40px;
 }
 
+.popup-detail-btn {
+  display: inline-flex;
+
+  align-items: center;
+  justify-content: center;
+
+  margin-top: 24px;
+
+  padding: 12px 22px;
+
+  border-radius: 999px;
+
+  background: var(--primary);
+
+  color: white;
+
+  text-decoration: none;
+
+  font-size: 14px;
+
+  font-weight: 600;
+
+  transition: var(--transition);
+}
+
+.popup-detail-btn:hover {
+  transform: translateY(-2px);
+
+  opacity: 0.9;
+}
+
+#popupGalleryDesc {
+  display: -webkit-box;
+
+  -webkit-line-clamp: 5;
+
+  -webkit-box-orient: vertical;
+
+  overflow: hidden;
+}
+
 @media (max-width: 768px) {
   .gallery-list {
     height: auto;

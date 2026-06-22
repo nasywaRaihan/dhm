@@ -9,6 +9,8 @@ function initGallery() {
 
   const popupDesc = document.getElementById('popupGalleryDesc');
 
+  const popupDetailBtn = document.getElementById('popupDetailBtn');
+
   const popupDate = document.querySelector('.popup-date');
 
   const prevBtn = document.getElementById('galleryPrev');
@@ -29,7 +31,15 @@ function initGallery() {
 
     popupDate.textContent = data.date;
 
-    popupDesc.innerHTML = data.desc;
+    const plainDesc = data.desc.replace(/<[^>]*>/g, '');
+
+    if (plainDesc.length > 180) {
+      popupDesc.textContent = plainDesc.substring(0, 180) + '...';
+    } else {
+      popupDesc.textContent = plainDesc;
+    }
+
+    popupDetailBtn.href = `gallery-detail.html?slug=${data.slug}`;
 
     /* RESET */
     sliderTrack.innerHTML = '';

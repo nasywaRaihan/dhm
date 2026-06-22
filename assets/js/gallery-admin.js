@@ -10,11 +10,21 @@ const thumbnailPreview = document.getElementById('thumbnailPreview');
 
 const submitBtn = document.querySelector('.submit-gallery-btn');
 
+const galleryImagesInput = document.getElementById('galleryImages');
+
+const imagesPreview = document.getElementById('imagesPreview');
+
 /* ===================================== */
 /* STATE */
 /* ===================================== */
 
 let thumbnailData = '';
+
+let galleryImages = [];
+
+let categorySelect;
+let divisionSelect;
+let datePicker;
 
 /* ===================================== */
 /* INIT */
@@ -28,6 +38,8 @@ loadEditData();
 
 handleThumbnail();
 
+handleGalleryImages();
+
 handleSubmit();
 
 /* ===================================== */
@@ -35,13 +47,13 @@ handleSubmit();
 /* ===================================== */
 
 function initSelect() {
-  new TomSelect('#galleryCategory', {
+  categorySelect = new TomSelect('#galleryCategory', {
     create: false,
     controlInput: null,
     placeholder: 'Pilih kategori',
   });
 
-  new TomSelect('#galleryDivision', {
+  divisionSelect = new TomSelect('#galleryDivision', {
     create: false,
     controlInput: null,
     placeholder: 'Pilih divisi',
@@ -53,7 +65,7 @@ function initSelect() {
 /* ===================================== */
 
 function initDatepicker() {
-  flatpickr('#galleryDate', {
+  datePicker = flatpickr('#galleryDate', {
     dateFormat: 'd F Y',
 
     altInput: true,
@@ -119,11 +131,15 @@ function loadEditData() {
 
   document.getElementById('galleryTitle').value = gallery.title;
 
-  document.getElementById('galleryCategory').value = gallery.category;
+  categorySelect.setValue(gallery.category);
 
-  document.getElementById('galleryDivision').value = gallery.division;
+  divisionSelect.setValue(gallery.division);
 
-  document.getElementById('galleryDate').value = gallery.date;
+  console.log('Tanggal:', gallery.date);
+
+  if (gallery.date) {
+    datePicker.setDate(gallery.date);
+  }
 
   document.getElementById('galleryDesc').value = gallery.desc;
 
@@ -138,6 +154,20 @@ function loadEditData() {
   document.querySelector('.form-section-title').textContent = 'Edit Gallery';
 
   document.querySelector('.gallery-admin-header h1').textContent = 'Edit Gallery';
+
+  galleryImages = gallery.images || [];
+
+  imagesPreview.innerHTML = '';
+
+  galleryImages.forEach((image) => {
+    const img = document.createElement('img');
+
+    img.src = image;
+
+    img.className = 'gallery-image-preview';
+
+    imagesPreview.appendChild(img);
+  });
 }
 
 /* ===================================== */
@@ -207,7 +237,7 @@ function handleSubmit() {
 
       desc,
 
-      images: [thumbnailData],
+      images: galleryImages,
     };
 
     /* ADD / UPDATE */
@@ -229,6 +259,8 @@ function handleSubmit() {
         date,
 
         desc,
+
+        images: galleryImages,
       };
     } else {
       galleryData.push(newGallery);
@@ -262,6 +294,38 @@ function handleSubmit() {
     thumbnailData = '';
 
     submitBtn.innerHTML = '<span>Simpan Gallery</span>';
+  });
+}
+
+/* ===================================== */
+/* GALLERY IMAGES */
+/* ===================================== */
+
+function handleGalleryImages() {
+  galleryImagesInput.addEventListener('change', (e) => {
+    const files = [...e.target.files];
+
+    galleryImages = [];
+
+    imagesPreview.innerHTML = '';
+
+    files.forEach((file) => {
+      const reader = new FileReader();
+
+      reader.onload = function (event) {
+        galleryImages.push(event.target.result);
+
+        const img = document.createElement('img');
+
+        img.src = event.target.result;
+
+        img.className = 'gallery-image-preview';
+
+        imagesPreview.appendChild(img);
+      };
+
+      reader.readAsDataURL(file);
+    });
   });
 }
 

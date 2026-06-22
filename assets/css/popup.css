@@ -294,10 +294,6 @@
 .popup-slider-track {
   display: flex;
 
-  width: 100%;
-
-  overflow: hidden;
-
   transition: var(--transition);
 }
 

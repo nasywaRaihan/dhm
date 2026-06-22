@@ -22,6 +22,8 @@ const detailDivision = document.getElementById('detailDivision');
 
 const detailDesc = document.getElementById('detailDesc');
 
+const detailGalleryImages = document.getElementById('detailGalleryImages');
+
 /* RENDER */
 
 if (gallery) {
@@ -34,4 +36,16 @@ if (gallery) {
   detailDivision.textContent = gallery.division;
 
   detailDesc.innerHTML = gallery.desc;
+
+  if (gallery.images) {
+    gallery.images.forEach((image) => {
+      const img = document.createElement('img');
+
+      img.src = image;
+
+      img.className = 'detail-gallery-photo';
+
+      detailGalleryImages.appendChild(img);
+    });
+  }
 }
