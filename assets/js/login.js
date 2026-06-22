@@ -38,6 +38,8 @@ function initLoginPopup() {
 
     /* DUMMY LOGIN */
     if (email === 'admin@gmail.com' && password === 'admin123') {
+      localStorage.setItem('adminLoggedIn', 'true');
+
       window.location.href = 'dashboard.html';
     } else {
       alert('Email atau password salah!');

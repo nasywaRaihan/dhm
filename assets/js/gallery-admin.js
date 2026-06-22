@@ -24,6 +24,8 @@ initSelect();
 
 initDatepicker();
 
+loadEditData();
+
 handleThumbnail();
 
 handleSubmit();
@@ -103,6 +105,42 @@ function handleThumbnail() {
 }
 
 /* ===================================== */
+/* LOAD EDIT DATA */
+/* ===================================== */
+
+function loadEditData() {
+  const editIndex = localStorage.getItem('editGalleryIndex');
+
+  if (editIndex === null) return;
+
+  const gallery = galleryData[editIndex];
+
+  if (!gallery) return;
+
+  document.getElementById('galleryTitle').value = gallery.title;
+
+  document.getElementById('galleryCategory').value = gallery.category;
+
+  document.getElementById('galleryDivision').value = gallery.division;
+
+  document.getElementById('galleryDate').value = gallery.date;
+
+  document.getElementById('galleryDesc').value = gallery.desc;
+
+  thumbnailData = gallery.thumbnail;
+
+  thumbnailPreview.src = gallery.thumbnail;
+
+  thumbnailPreview.style.display = 'block';
+
+  submitBtn.innerHTML = '<span>Update Gallery</span>';
+
+  document.querySelector('.form-section-title').textContent = 'Edit Gallery';
+
+  document.querySelector('.gallery-admin-header h1').textContent = 'Edit Gallery';
+}
+
+/* ===================================== */
 /* SUBMIT */
 /* ===================================== */
 
@@ -120,6 +158,8 @@ function handleSubmit() {
 
     const desc = document.getElementById('galleryDesc').value.trim();
 
+    const editIndex = localStorage.getItem('editGalleryIndex');
+
     if (!thumbnailData) {
       showError('Thumbnail wajib diupload!');
 
@@ -136,7 +176,11 @@ function handleSubmit() {
 
     /* DUPLICATE */
 
-    const isExist = galleryData.some((item) => item.slug === slug);
+    const isExist = galleryData.some((item, index) => {
+      if (String(index) === editIndex) return false;
+
+      return item.slug === slug;
+    });
 
     if (isExist) {
       showError('Gallery sudah ada!');
@@ -166,17 +210,46 @@ function handleSubmit() {
       images: [thumbnailData],
     };
 
-    /* PUSH */
+    /* ADD / UPDATE */
 
-    galleryData.push(newGallery);
+    if (editIndex !== null) {
+      galleryData[editIndex] = {
+        ...galleryData[editIndex],
+
+        title,
+
+        slug,
+
+        category,
+
+        division,
+
+        thumbnail: thumbnailData,
+
+        date,
+
+        desc,
+      };
+    } else {
+      galleryData.push(newGallery);
+    }
 
     /* SAVE */
 
     localStorage.setItem('galleryData', JSON.stringify(galleryData));
+    localStorage.removeItem('editGalleryIndex');
 
     /* SUCCESS */
 
-    showSuccess('Gallery berhasil ditambahkan!');
+    if (editIndex !== null) {
+      showSuccess('Gallery berhasil diperbarui!');
+    } else {
+      showSuccess('Gallery berhasil ditambahkan!');
+    }
+
+    setTimeout(() => {
+      window.location.href = 'dashboard.html';
+    }, 1500);
 
     /* RESET */
 
@@ -214,4 +287,10 @@ function showSuccess(message) {
 
 function showError(message) {
   alert(message);
+}
+
+const isLoggedIn = localStorage.getItem('adminLoggedIn');
+
+if (isLoggedIn !== 'true') {
+  window.location.href = 'index.html';
 }

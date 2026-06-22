@@ -46,7 +46,7 @@
 
           <a href="gallery-admin.html" class="active"> Tambah Gallery </a>
 
-          <a href="index.html"> Logout </a>
+          <a href="#" id="logoutBtn"> Logout </a>
         </nav>
       </aside>
 
@@ -185,5 +185,20 @@
 
     <!-- JS -->
     <script src="assets/js/gallery-admin.js"></script>
+    <script src="assets/js/admin-logout.js"></script>
+
+    <div class="logout-popup" id="logoutPopup">
+      <div class="logout-popup-content">
+        <h3>Logout Dashboard</h3>
+
+        <p>Apakah kamu yakin ingin keluar dari dashboard admin?</p>
+
+        <div class="logout-actions">
+          <button id="cancelLogout" class="cancel-btn">Batal</button>
+
+          <button id="confirmLogout" class="confirm-btn">Ya, Logout</button>
+        </div>
+      </div>
+    </div>
   </body>
 </html>

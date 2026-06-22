@@ -18,15 +18,17 @@ const searchInput = document.getElementById('searchInput');
 /* INIT */
 /* ====================================== */
 
-updateStats();
+window.addEventListener('DOMContentLoaded', () => {
+  updateStats();
 
-renderTable();
+  renderTable();
 
-initChart();
+  initChart();
 
-initSearch();
+  initSearch();
 
-initLogout();
+  initLogout();
+});
 
 /* ====================================== */
 /* STATS */
@@ -114,6 +116,7 @@ function renderTable(data = galleryData) {
 
           <button
             class="edit-btn"
+            data-index="${index}"
           >
             Edit
           </button>
@@ -135,6 +138,26 @@ function renderTable(data = galleryData) {
   });
 
   initDeleteButtons();
+
+  initEditButtons();
+}
+
+/* ====================================== */
+/* EDIT */
+/* ====================================== */
+
+function initEditButtons() {
+  const buttons = document.querySelectorAll('.edit-btn');
+
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const index = btn.dataset.index;
+
+      localStorage.setItem('editGalleryIndex', index);
+
+      window.location.href = 'gallery-admin.html';
+    });
+  });
 }
 
 /* ====================================== */
@@ -272,15 +295,11 @@ function updateChart() {
 }
 
 /* ====================================== */
-/* LOGOUT */
+/* AUTH CHECK */
 /* ====================================== */
 
-function initLogout() {
-  const logoutBtn = document.getElementById('logoutBtn');
+const isLoggedIn = localStorage.getItem('adminLoggedIn');
 
-  logoutBtn.addEventListener('click', (e) => {
-    e.preventDefault();
-
-    window.location.href = 'index.html';
-  });
+if (isLoggedIn !== 'true') {
+  window.location.href = 'index.html';
 }
