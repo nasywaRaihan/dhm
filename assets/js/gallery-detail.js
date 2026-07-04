@@ -24,6 +24,8 @@ const detailDesc = document.getElementById('detailDesc');
 
 const detailGalleryImages = document.getElementById('detailGalleryImages');
 
+const shareBtn = document.getElementById('shareBtn');
+
 /* RENDER */
 
 if (gallery) {
@@ -49,3 +51,39 @@ if (gallery) {
     });
   }
 }
+
+/* SHARE */
+
+shareBtn.addEventListener('click', async () => {
+  const shareData = {
+    title: detailTitle.textContent,
+
+    text: `Lihat dokumentasi kegiatan "${detailTitle.textContent}"`,
+
+    url: window.location.href,
+  };
+
+  // HP / Browser yang support
+  if (navigator.share) {
+    try {
+      await navigator.share(shareData);
+    } catch (err) {
+      // user cancel
+    }
+
+    return;
+  }
+
+  // Desktop
+  try {
+    await navigator.clipboard.writeText(window.location.href);
+
+    shareBtn.textContent = '✅ Link Disalin';
+
+    setTimeout(() => {
+      shareBtn.textContent = '🔗 Bagikan';
+    }, 2000);
+  } catch {
+    alert('Gagal menyalin link.');
+  }
+});

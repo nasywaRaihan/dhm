@@ -1,6 +1,7 @@
 /* PARTNER */
 .partners img {
-  height: 80px;
+  height: 200px;
+  max-width: 100%;
   margin: 20px;
 }
 
@@ -15,6 +16,37 @@ footer {
   font-size: var(--text-sm);
 }
 
+.footer-social {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 22px;
+
+  margin: 35px 0 25px;
+}
+
+.footer-social a {
+  width: 150px;
+  height: 100px;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
+  border-radius: 50%;
+
+  transition: 0.3s ease;
+}
+
+.footer-social img {
+  height: 100px;
+  max-width: 100px;
+}
+
+.footer-social a:hover {
+  transform: translateY(-6px) scale(1.1);
+}
+
 @media (max-width: 768px) {
   footer {
     padding: 22px 16px;
@@ -26,5 +58,29 @@ footer {
     line-height: 1.6;
 
     text-align: center;
+  }
+
+  .footer-social a {
+    width: 70px;
+    height: 40px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    border-radius: 50%;
+
+    transition: 0.3s ease;
+  }
+
+  .footer-social img {
+    height: 70px;
+    max-width: 70px;
+  }
+
+  .partners img {
+    height: 100px;
+    max-width: 100%;
+    margin: 5px;
   }
 }

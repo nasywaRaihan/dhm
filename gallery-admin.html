@@ -22,6 +22,7 @@
     <!-- PAGE CSS -->
     <link rel="stylesheet" href="assets/css/admin-sidebar.css" />
     <link rel="stylesheet" href="assets/css/gallery-admin.css" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.css" />
   </head>
 
   <body>
@@ -72,7 +73,9 @@
           <form id="galleryForm">
             <!-- TITLE -->
             <div class="form-group">
-              <label> Judul Gallery </label>
+              <div class="field-top">
+                <label>Judul Gallery</label>
+              </div>
 
               <input type="text" id="galleryTitle" placeholder="Masukkan judul gallery" required />
             </div>
@@ -109,17 +112,19 @@
                 </div>
 
                 <select id="galleryDivision" required>
-                  <option value="">Pilih Divisi</option>
+                  <option value="">Inti</option>
 
-                  <option value="PH">PH</option>
+                  <option value="PH">Pengurus Harian</option>
 
-                  <option value="HUMMED">HUMMED</option>
+                  <option value="HUMMED">Humas dan Media</option>
 
-                  <option value="PS">PS</option>
+                  <option value="PS">Pembinaan Siswa</option>
 
-                  <option value="PM">PM</option>
+                  <option value="PM">Pembinaan Masyarakat</option>
 
-                  <option value="PSDI">PSDI</option>
+                  <option value="PSDI">Pengembangan Sumber Daya Insani</option>
+
+                  <option value="PPS">Kemuslimahan</option>
                 </select>
               </div>
             </div>
@@ -139,7 +144,9 @@
 
               <!-- THUMB -->
               <div class="form-group">
-                <label> Thumbnail </label>
+                <div class="field-top">
+                  <label>Thumbnail</label>
+                </div>
 
                 <div class="upload-box">
                   <input type="file" id="galleryThumbnail" accept="image/*" hidden />
@@ -161,7 +168,9 @@
             <!-- GALLERY IMAGES -->
 
             <div class="form-group">
-              <label>Foto Dokumentasi</label>
+              <div class="field-top">
+                <label>Foto Dokumentasi</label>
+              </div>
 
               <div class="upload-box">
                 <input type="file" id="galleryImages" accept="image/*" multiple hidden />
@@ -180,9 +189,11 @@
 
             <!-- DESCRIPTION -->
             <div class="form-group">
-              <label> Deskripsi </label>
+              <div class="field-top">
+                <label>Deskripsi</label>
+              </div>
 
-              <textarea id="galleryDesc" placeholder="Masukkan deskripsi gallery" required></textarea>
+              <textarea id="galleryDesc" placeholder="Masukkan deskripsi gallery" required> </textarea>
             </div>
 
             <!-- BUTTON -->

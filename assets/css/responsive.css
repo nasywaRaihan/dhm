@@ -633,6 +633,16 @@
   .youtube-video-wrapper {
     border-radius: 22px;
   }
+
+  .youtube-subtitle {
+    width: 100%;
+    max-width: 300px;
+
+    margin-inline: auto;
+
+    font-size: var(--text-xs);
+    line-height: 1.8;
+  }
 }
 
 /* HP KECIL */

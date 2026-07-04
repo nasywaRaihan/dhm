@@ -102,38 +102,38 @@ let galleryData = [
 const divisiData = [
   {
     title: 'PH',
-    img: 'assets/roblox_asik.png',
-    desc: 'Divisi Pengembangan Sumber Daya Insani berfokus pada pembinaan kader dakwah yang aktif dan berkualitas.',
+    img: 'assets/img/roblox_asik.png',
+    desc: 'Pengurus Harian merupakan tim inti yang menjaga roda organisasi tetap berjalan. Divisi ini berperan dalam monitoring program kerja, pengelolaan administrasi, surat-menyurat, koordinasi internal, serta pengelolaan keuangan organisasi agar seluruh agenda dakwah dapat berjalan tertib dan berkesinambungan.',
   },
 
   {
     title: 'HUMMED',
-    img: 'assets/roblox_asik.png',
-    desc: 'Divisi HUMMED bertanggung jawab dalam media informasi dan publikasi kegiatan DHM.',
+    img: 'assets/img/roblox_asik.png',
+    desc: 'Divisi Humas dan Media berperan dalam menyebarkan dakwah secara kreatif di ruang digital. Divisi ini mengelola media sosial, podcast, konten kreatif, serta dokumentasi kegiatan. Selain itu, divisi ini juga menjalin relasi melalui studi banding dengan lembaga dakwah lain untuk memperluas jaringan dan menghadirkan inovasi dakwah.',
   },
 
   {
     title: 'PSDI',
-    img: 'assets/roblox_asik.png',
-    desc: 'Divisi PSDI berperan dalam pengembangan kaderisasi dan peningkatan SDM.',
+    img: 'assets/img/roblox_asik.png',
+    desc: 'Divisi Pengembangan Sumber Daya Insani berfokus pada pembinaan internal anggota DHM. Melalui kegiatan seperti Majlis Ilmu, Rihlah, Liga DHM, dan Lailatul Ukhuwah, divisi ini memperkuat softskill, ukhuwah, kebersamaan, serta semangat persaudaraan antaranggota.',
   },
 
   {
     title: 'PS',
-    img: 'assets/roblox_asik.png',
+    img: 'assets/img/roblox_asik.png',
     desc: 'Divisi Pembinaan Siswa fokus pada pembinaan pelajar sekolah.',
   },
 
   {
     title: 'PM',
-    img: 'assets/roblox_asik.png',
-    desc: 'Divisi Pembinaan Masyarakat bergerak dalam pengabdian masyarakat.',
+    img: 'assets/img/roblox_asik.png',
+    desc: 'Divisi Pembinaan Masyarakat hadir sebagai bentuk kepedulian DHM kepada masyarakat, khususnya melalui dusun binaan. Program yang dijalankan meliputi Relawan Ramadhan, Kajian Dakwah, Daurah Fiqhiyah, Bakti Sosial, serta penyaluran hewan Qurban sebagai wujud kontribusi nyata dalam membangun masyarakat yang lebih religius dan peduli.',
   },
 
   {
     title: 'Kemuslimahan',
-    img: 'assets/roblox_asik.png',
-    desc: 'Divisi Kemuslimahan fokus pada pembinaan muslimah aktif. Syududuuuuuuuuuuuuuu',
+    img: 'assets/img/roblox_asik.png',
+    desc: 'Divisi Kemuslimahan menjadi ruang pembinaan dan pengembangan potensi muslimah di lingkungan DHM. Melalui Kajian Kemuslimahan dan Ruang Sapa Singgah, divisi ini hadir untuk memperkuat ilmu, akhlak, ukhuwah, serta peran mahasiswi dalam dakwah. ',
   },
 ];
 

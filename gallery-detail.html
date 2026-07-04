@@ -22,22 +22,20 @@
     <!-- NAVBAR -->
     <header class="navbar">
       <div class="logo">
-        <img src="assets/logo_dhm.png" class="logo-icon" alt="logo dhm" />
-
-        <span class="logo-text"> DAKWAH HIJRAH MAHASISWA </span>
+        <img src="assets/img/logo_dhm.png" class="logo-icon" alt="logo dhm" />
+        <span class="logo-text">DAKWAH HIJRAH MAHASISWA</span>
       </div>
 
-      <!-- MOBILE TOGGLE -->
       <div class="menu-toggle" id="menuToggle">
         <span></span>
         <span></span>
       </div>
 
-      <!-- MENU -->
       <nav id="navMenu">
-        <a href="index.html"> Home </a>
+        <a href="index.html">Home</a>
+        <a href="gallery.html" class="active">Gallery</a>
 
-        <a href="gallery.html" class="active"> Gallery </a>
+        <a href="#login" class="admin-link">Login Admin</a>
       </nav>
     </header>
 
@@ -46,24 +44,35 @@
       <!-- DETAIL -->
       <section class="gallery-detail-section">
         <div class="gallery-detail-container">
-          <!-- IMAGE -->
+          <!-- HERO -->
           <div class="gallery-detail-image">
-            <img id="detailImage" src="" alt="gallery detail" />
+            <img id="detailImage" />
           </div>
 
           <!-- INFO -->
           <div class="gallery-detail-content">
-            <span id="detailDate"> Tanggal </span>
+            <span class="detail-meta">
+              <span id="detailDate"></span>
+              •
+              <span id="detailDivision"></span>
+            </span>
 
-            <h1 id="detailTitle">Judul Gallery</h1>
+            <h1 id="detailTitle"></h1>
 
-            <p id="detailDivision">Divisi</p>
+            <div id="detailDesc"></div>
 
-            <div id="detailDesc">Deskripsi</div>
+            <button class="share-btn" id="shareBtn">🔗 Bagikan</button>
           </div>
 
-          <!-- GALLERY PHOTOS -->
-          <div class="detail-gallery-images" id="detailGalleryImages"></div>
+          <!-- Divider -->
+
+          <div class="detail-gallery">
+            <h2>📸 Dokumentasi Kegiatan</h2>
+
+            <div class="detail-gallery-slider">
+              <div class="detail-gallery-track" id="detailGalleryImages"></div>
+            </div>
+          </div>
         </div>
       </section>
     </main>

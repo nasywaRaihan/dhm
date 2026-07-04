@@ -6,15 +6,15 @@ function initDivisiPopup() {
   const closeModal = document.getElementById('closeModal');
   const openBtns = document.querySelectorAll('.openDivisi');
 
-  openBtns.forEach((btn, i) => {
+  openBtns.forEach((btn) => {
     btn.addEventListener('click', () => {
+      const index = Number(btn.dataset.index);
+
       modal.classList.add('active');
 
-      modalTitle.textContent = divisiData[i].title;
-
-      modalDesc.textContent = divisiData[i].desc;
-
-      modalImg.src = divisiData[i].img;
+      modalTitle.textContent = divisiData[index].title;
+      modalDesc.textContent = divisiData[index].desc;
+      modalImg.src = divisiData[index].img;
     });
   });
 

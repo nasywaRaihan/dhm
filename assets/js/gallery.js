@@ -1,4 +1,5 @@
 let currentGallery = 0;
+let currentSlide = 0;
 
 function initGallery() {
   const galleryPopup = document.getElementById('galleryPopup');
@@ -18,8 +19,26 @@ function initGallery() {
   const nextBtn = document.getElementById('galleryNext');
 
   const sliderTrack = document.getElementById('popupSliderTrack');
+  let touchStartX = 0;
+  let touchEndX = 0;
 
   const sliderDots = document.getElementById('popupSliderDots');
+
+  function goToSlide(index) {
+    const slides = sliderTrack.querySelectorAll('.popup-slide');
+
+    if (!slides.length) return;
+
+    currentSlide = index;
+
+    const targetSlide = slides[currentSlide];
+
+    sliderTrack.style.transform = `translateX(-${targetSlide.offsetLeft}px)`;
+
+    document.querySelectorAll('.popup-dot').forEach((dot, i) => {
+      dot.classList.toggle('active', i === currentSlide);
+    });
+  }
 
   /* LOAD GALLERY */
   function loadGallery(index) {
@@ -46,17 +65,22 @@ function initGallery() {
 
     sliderDots.innerHTML = '';
 
+    currentSlide = 0;
+
     /* IMAGES */
     data.images.forEach((img, i) => {
-      const image = document.createElement('img');
+      const slide = document.createElement('div');
+      slide.className = 'popup-slide';
 
+      const image = document.createElement('img');
       image.src = img;
 
-      sliderTrack.appendChild(image);
+      slide.appendChild(image);
 
-      /* DOT */
+      sliderTrack.appendChild(slide);
+
+      // DOT
       const dot = document.createElement('div');
-
       dot.classList.add('popup-dot');
 
       if (i === 0) {
@@ -64,14 +88,14 @@ function initGallery() {
       }
 
       dot.addEventListener('click', () => {
-        sliderTrack.style.transform = `translateX(-${i * 100}%)`;
-
-        document.querySelectorAll('.popup-dot').forEach((d) => d.classList.remove('active'));
-
-        dot.classList.add('active');
+        goToSlide(i);
       });
 
       sliderDots.appendChild(dot);
+    });
+
+    requestAnimationFrame(() => {
+      goToSlide(0);
     });
   }
 
@@ -126,5 +150,39 @@ function initGallery() {
     if (e.target === galleryPopup) {
       galleryPopup.classList.remove('active');
     }
+  });
+
+  sliderTrack.addEventListener('touchstart', (e) => {
+    touchStartX = e.touches[0].clientX;
+  });
+
+  sliderTrack.addEventListener('touchmove', (e) => {
+    touchEndX = e.touches[0].clientX;
+  });
+
+  sliderTrack.addEventListener('touchend', () => {
+    const distance = touchStartX - touchEndX;
+
+    if (Math.abs(distance) < 50) return;
+
+    const totalSlide = sliderTrack.querySelectorAll('.popup-slide').length;
+
+    if (distance > 0) {
+      // swipe kiri
+
+      if (currentSlide < totalSlide - 1) {
+        goToSlide(currentSlide + 1);
+      }
+    } else {
+      // swipe kanan
+
+      if (currentSlide > 0) {
+        goToSlide(currentSlide - 1);
+      }
+    }
+  });
+
+  window.addEventListener('resize', () => {
+    goToSlide(currentSlide);
   });
 }

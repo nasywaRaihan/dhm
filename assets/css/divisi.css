@@ -155,12 +155,15 @@
 
 .divisi-content p {
   font-size: var(--text-sm);
-
   line-height: 1.7;
-
   color: var(--text-soft);
-
   margin-bottom: 18px;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 4; /* jumlah baris */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .divisi-content a {
