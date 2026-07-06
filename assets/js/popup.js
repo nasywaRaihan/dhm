@@ -10,6 +10,10 @@ function initDivisiPopup() {
     btn.addEventListener('click', () => {
       const index = Number(btn.dataset.index);
 
+      console.log(index);
+      console.log(divisiData);
+      console.log(divisiData[index]);
+
       modal.classList.add('active');
 
       modalTitle.textContent = divisiData[index].title;
