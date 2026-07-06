@@ -1,80 +1,66 @@
-/* GET SLUG */
-
+/* GET PARAM */
 const params = new URLSearchParams(window.location.search);
-
 const slug = params.get('slug');
 
-/* FIND DATA */
-
-const gallery = galleryData.find((item) => {
-  return item.slug === slug;
-});
-
 /* ELEMENT */
-
 const detailImage = document.getElementById('detailImage');
-
 const detailDate = document.getElementById('detailDate');
-
 const detailTitle = document.getElementById('detailTitle');
-
 const detailDivision = document.getElementById('detailDivision');
-
 const detailDesc = document.getElementById('detailDesc');
-
 const detailGalleryImages = document.getElementById('detailGalleryImages');
-
 const shareBtn = document.getElementById('shareBtn');
 
-/* RENDER */
+/* INIT */
+async function initGalleryDetail() {
+  if (!slug) return;
 
-if (gallery) {
-  detailImage.src = gallery.thumbnail;
+  const gallery = await getGalleryBySlug(slug);
 
-  detailDate.textContent = gallery.date;
-
-  detailTitle.textContent = gallery.title;
-
-  detailDivision.textContent = gallery.division;
-
-  detailDesc.innerHTML = gallery.desc;
-
-  if (gallery.images) {
-    gallery.images.forEach((image) => {
-      const img = document.createElement('img');
-
-      img.src = image;
-
-      img.className = 'detail-gallery-photo';
-
-      detailGalleryImages.appendChild(img);
-    });
+  if (!gallery) {
+    detailTitle.textContent = 'Gallery tidak ditemukan';
+    return;
   }
+
+  detailImage.src = gallery.thumbnail;
+  detailDate.textContent = gallery.date;
+  detailTitle.textContent = gallery.title;
+  detailDivision.textContent = gallery.division;
+  detailDesc.innerHTML = gallery.description;
+
+  const images = await getGalleryImages(gallery.id);
+
+  detailGalleryImages.innerHTML = '';
+
+  images.forEach((item) => {
+    const img = document.createElement('img');
+
+    img.src = item.image_url;
+
+    img.className = 'detail-gallery-photo';
+
+    detailGalleryImages.appendChild(img);
+  });
 }
 
-/* SHARE */
+initGalleryDetail();
 
+/* SHARE */
 shareBtn.addEventListener('click', async () => {
   const shareData = {
     title: detailTitle.textContent,
-
     text: `Lihat dokumentasi kegiatan "${detailTitle.textContent}"`,
-
     url: window.location.href,
   };
 
-  // HP / Browser yang support
   if (navigator.share) {
     try {
       await navigator.share(shareData);
-    } catch (err) {
-      // user cancel
-    }
+    } catch (err) {}
 
     return;
   }
 
-  // Desktop
   try {
     await navigator.clipboard.writeText(window.location.href);
 

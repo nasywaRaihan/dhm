@@ -1,7 +1,4 @@
-/* ===================================== */
 /* ELEMENT */
-/* ===================================== */
-
 const galleryForm = document.getElementById('galleryForm');
 
 const thumbnailInput = document.getElementById('galleryThumbnail');
@@ -14,38 +11,35 @@ const galleryImagesInput = document.getElementById('galleryImages');
 
 const imagesPreview = document.getElementById('imagesPreview');
 
-/* ===================================== */
 /* STATE */
-/* ===================================== */
+let oldGalleryImages = [];
 
-let thumbnailData = '';
+let editGalleryId = null;
 
-let galleryImages = [];
+let oldThumbnail = '';
 
 let categorySelect;
 let divisionSelect;
 let datePicker;
 
-/* ===================================== */
 /* INIT */
-/* ===================================== */
+async function init() {
+  initSelect();
 
-initSelect();
+  initDatepicker();
 
-initDatepicker();
+  await loadEditData();
 
-loadEditData();
+  handleThumbnail();
 
-handleThumbnail();
+  handleGalleryImages();
 
-handleGalleryImages();
+  handleSubmit();
+}
 
-handleSubmit();
+init();
 
-/* ===================================== */
 /* TOM SELECT */
-/* ===================================== */
-
 function initSelect() {
   categorySelect = new TomSelect('#galleryCategory', {
     create: false,
@@ -60,10 +54,7 @@ function initSelect() {
   });
 }
 
-/* ===================================== */
 /* DATEPICKER */
-/* ===================================== */
-
 function initDatepicker() {
   datePicker = flatpickr('#galleryDate', {
     dateFormat: 'd F Y',
@@ -78,10 +69,7 @@ function initDatepicker() {
   });
 }
 
-/* ===================================== */
 /* THUMBNAIL */
-/* ===================================== */
-
 function handleThumbnail() {
   thumbnailInput.addEventListener('change', (e) => {
     const file = e.target.files[0];
@@ -105,9 +93,7 @@ function handleThumbnail() {
     const reader = new FileReader();
 
     reader.onload = function (event) {
-      thumbnailData = event.target.result;
-
-      thumbnailPreview.src = thumbnailData;
+      thumbnailPreview.src = event.target.result;
 
       thumbnailPreview.style.display = 'block';
     };
@@ -116,16 +102,17 @@ function handleThumbnail() {
   });
 }
 
-/* ===================================== */
 /* LOAD EDIT DATA */
-/* ===================================== */
+async function loadEditData() {
+  const params = new URLSearchParams(window.location.search);
 
-function loadEditData() {
-  const editIndex = localStorage.getItem('editGalleryIndex');
+  const id = params.get('id');
 
-  if (editIndex === null) return;
+  if (!id) return;
 
-  const gallery = galleryData[editIndex];
+  editGalleryId = id;
+
+  const gallery = await getGalleryById(id);
 
   if (!gallery) return;
 
@@ -135,68 +122,73 @@ function loadEditData() {
 
   divisionSelect.setValue(gallery.division);
 
-  console.log('Tanggal:', gallery.date);
+  datePicker.setDate(gallery.date);
 
-  if (gallery.date) {
-    datePicker.setDate(gallery.date);
-  }
+  document.getElementById('galleryDesc').value = gallery.description;
 
-  document.getElementById('galleryDesc').value = gallery.desc;
-
-  thumbnailData = gallery.thumbnail;
+  oldThumbnail = gallery.thumbnail;
 
   thumbnailPreview.src = gallery.thumbnail;
 
   thumbnailPreview.style.display = 'block';
 
-  submitBtn.innerHTML = '<span>Update Gallery</span>';
+  const images = await getGalleryImages(id);
 
-  document.querySelector('.form-section-title').textContent = 'Edit Gallery';
-
-  document.querySelector('.gallery-admin-header h1').textContent = 'Edit Gallery';
-
-  galleryImages = gallery.images || [];
+  oldGalleryImages = images;
 
   imagesPreview.innerHTML = '';
 
-  galleryImages.forEach((image) => {
-    const img = document.createElement('img');
+  images.forEach((img) => {
+    const image = document.createElement('img');
 
-    img.src = image;
+    image.src = img.image_url;
 
-    img.className = 'gallery-image-preview';
+    image.className = 'gallery-image-preview';
 
-    imagesPreview.appendChild(img);
+    imagesPreview.appendChild(image);
   });
+
+  submitBtn.innerHTML = '<span>Update Gallery</span>';
 }
 
-/* ===================================== */
 /* SUBMIT */
-/* ===================================== */
-
 function handleSubmit() {
-  galleryForm.addEventListener('submit', (e) => {
+  galleryForm.addEventListener('submit', async (e) => {
     e.preventDefault();
 
     const title = document.getElementById('galleryTitle').value.trim();
-
     const category = document.getElementById('galleryCategory').value;
-
     const division = document.getElementById('galleryDivision').value;
-
     const date = document.getElementById('galleryDate').value;
-
     const desc = document.getElementById('galleryDesc').value.trim();
 
-    const editIndex = localStorage.getItem('editGalleryIndex');
+    const thumbnailFile = thumbnailInput.files[0];
 
-    if (!thumbnailData) {
-      showError('Thumbnail wajib diupload!');
+    /* VALIDASI FORM */
+    if (!title || !category || !division || !date || !desc) {
+      showError('Lengkapi semua data!');
+      return;
+    }
+
+    let thumbnailUrl = oldThumbnail;
+
+    if (!editGalleryId && !thumbnailFile) {
+      showError('Thumbnail wajib diupload');
 
       return;
     }
 
-    /* SLUG */
+    const imageFiles = [...galleryImagesInput.files];
+
+    let imageUrls = oldGalleryImages.map((i) => i.image_url);
+
+    if (!editGalleryId && imageFiles.length === 0) {
+      showError('Minimal upload 1 foto dokumentasi!');
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.innerHTML = 'Uploading...';
 
     const slug = title
       .toLowerCase()
@@ -204,48 +196,46 @@ function handleSubmit() {
       .replace(/[^\w\s-]/g, '')
       .replace(/\s+/g, '-');
 
-    /* DUPLICATE */
+    try {
+      /* Upload Thumbnail*/
+      const exist = await getGalleryBySlug(slug);
 
-    const isExist = galleryData.some((item, index) => {
-      if (String(index) === editIndex) return false;
+      if (exist && String(exist.id) !== String(editGalleryId)) {
+        showError('Gallery sudah ada!');
 
-      return item.slug === slug;
-    });
+        submitBtn.disabled = false;
 
-    if (isExist) {
-      showError('Gallery sudah ada!');
+        submitBtn.innerHTML = editGalleryId ? '<span>Update Gallery</span>' : '<span>Simpan Gallery</span>';
 
-      return;
-    }
+        return;
+      }
 
-    /* NEW DATA */
+      if (thumbnailFile) {
+        thumbnailUrl = await uploadImage(thumbnailFile, 'thumbnail');
 
-    const newGallery = {
-      title,
+        if (!thumbnailUrl) throw new Error('Thumbnail gagal diupload');
+      }
 
-      slug,
+      if (!thumbnailUrl) throw new Error('Thumbnail gagal diupload');
 
-      category,
+      /*Upload Dokumentasi */
+      if (imageFiles.length > 0) {
+        imageUrls = [];
 
-      division,
+        for (const file of imageFiles) {
+          const url = await uploadImage(file, 'documentation');
 
-      thumbnail: thumbnailData,
+          if (!url) {
+            throw new Error('Foto dokumentasi gagal diupload');
+          }
 
-      date,
+          imageUrls.push(url);
+        }
+      }
 
-      views: 0,
-
-      desc,
-
-      images: galleryImages,
-    };
-
-    /* ADD / UPDATE */
-
-    if (editIndex !== null) {
-      galleryData[editIndex] = {
-        ...galleryData[editIndex],
-
+      /*Simpan Gallery */
+      let gallery;
+      const payload = {
         title,
 
         slug,
@@ -254,58 +244,53 @@ function handleSubmit() {
 
         division,
 
-        thumbnail: thumbnailData,
+        thumbnail: thumbnailUrl,
 
         date,
 
-        desc,
-
-        images: galleryImages,
+        description: desc,
       };
-    } else {
-      galleryData.push(newGallery);
+
+      if (!editGalleryId) {
+        payload.views = 0;
+      }
+
+      if (editGalleryId) {
+        gallery = await updateGallery(editGalleryId, payload);
+      } else {
+        gallery = await createGallery(payload);
+      }
+
+      if (!gallery) throw new Error('Gagal membuat gallery');
+
+      /*Simpan Semua Foto*/
+      if (editGalleryId) {
+        await deleteGalleryImages(editGalleryId);
+      }
+
+      await saveGalleryImages(gallery.id, imageUrls);
+
+      showSuccess(editGalleryId ? 'Gallery berhasil diperbarui!' : 'Gallery berhasil ditambahkan!');
+
+      setTimeout(() => {
+        window.location.href = 'dashboard.html';
+      }, 1200);
+    } catch (err) {
+      console.error(err);
+
+      showError(err.message);
+    } finally {
+      submitBtn.disabled = false;
+
+      submitBtn.innerHTML = editGalleryId ? '<span>Update Gallery</span>' : '<span>Simpan Gallery</span>';
     }
-
-    /* SAVE */
-
-    localStorage.setItem('galleryData', JSON.stringify(galleryData));
-    localStorage.removeItem('editGalleryIndex');
-
-    /* SUCCESS */
-
-    if (editIndex !== null) {
-      showSuccess('Gallery berhasil diperbarui!');
-    } else {
-      showSuccess('Gallery berhasil ditambahkan!');
-    }
-
-    setTimeout(() => {
-      window.location.href = 'dashboard.html';
-    }, 1500);
-
-    /* RESET */
-
-    galleryForm.reset();
-
-    thumbnailPreview.style.display = 'none';
-
-    thumbnailPreview.src = '';
-
-    thumbnailData = '';
-
-    submitBtn.innerHTML = '<span>Simpan Gallery</span>';
   });
 }
 
-/* ===================================== */
 /* GALLERY IMAGES */
-/* ===================================== */
-
 function handleGalleryImages() {
   galleryImagesInput.addEventListener('change', (e) => {
     const files = [...e.target.files];
-
-    galleryImages = [];
 
     imagesPreview.innerHTML = '';
 
@@ -313,8 +298,6 @@ function handleGalleryImages() {
       const reader = new FileReader();
 
       reader.onload = function (event) {
-        galleryImages.push(event.target.result);
-
         const img = document.createElement('img');
 
         img.src = event.target.result;
@@ -329,10 +312,7 @@ function handleGalleryImages() {
   });
 }
 
-/* ===================================== */
 /* SUCCESS */
-/* ===================================== */
-
 function showSuccess(message) {
   submitBtn.innerHTML = 'Berhasil Disimpan ✓';
 
@@ -341,14 +321,11 @@ function showSuccess(message) {
   setTimeout(() => {
     submitBtn.classList.remove('success');
 
-    submitBtn.innerHTML = '<span>Simpan Gallery</span>';
+    submitBtn.innerHTML = editGalleryId ? '<span>Update Gallery</span>' : '<span>Simpan Gallery</span>';
   }, 2000);
 }
 
-/* ===================================== */
 /* ERROR */
-/* ===================================== */
-
 function showError(message) {
   alert(message);
 }

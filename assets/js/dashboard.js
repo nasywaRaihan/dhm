@@ -2,6 +2,8 @@
 /* ELEMENT */
 /* ====================================== */
 
+let galleryData = [];
+
 const totalGallery = document.getElementById('totalGallery');
 
 const totalViews = document.getElementById('totalViews');
@@ -18,12 +20,22 @@ const searchInput = document.getElementById('searchInput');
 /* INIT */
 /* ====================================== */
 
-window.addEventListener('DOMContentLoaded', () => {
+window.addEventListener('DOMContentLoaded', async () => {
+  galleryData = await getAllGallery();
+
+  console.log('galleryData =', galleryData);
+
   updateStats();
+
+  console.log('Stats selesai');
 
   renderTable();
 
+  console.log('Table selesai');
+
   initChart();
+
+  console.log('Chart selesai');
 
   initSearch();
 
@@ -38,7 +50,7 @@ function updateStats() {
   totalGallery.textContent = galleryData.length;
 
   const views = galleryData.reduce((total, item) => {
-    return total + item.views;
+    return total + (item.views || 0);
   }, 0);
 
   totalViews.textContent = views.toLocaleString();
@@ -87,7 +99,7 @@ function renderTable(data = galleryData) {
             </h4>
 
             <p>
-              ${item.date}
+              ${new Date(item.date).toLocaleDateString('id-ID')}
             </p>
 
           </div>
@@ -145,17 +157,14 @@ function renderTable(data = galleryData) {
 /* ====================================== */
 /* EDIT */
 /* ====================================== */
-
 function initEditButtons() {
   const buttons = document.querySelectorAll('.edit-btn');
 
   buttons.forEach((btn) => {
     btn.addEventListener('click', () => {
-      const index = btn.dataset.index;
+      const gallery = galleryData[btn.dataset.index];
 
-      localStorage.setItem('editGalleryIndex', index);
-
-      window.location.href = 'gallery-admin.html';
+      window.location.href = `gallery-admin.html?id=${gallery.id}`;
     });
   });
 }
@@ -168,16 +177,18 @@ function initDeleteButtons() {
   const buttons = document.querySelectorAll('.delete-btn');
 
   buttons.forEach((btn) => {
-    btn.addEventListener('click', () => {
+    btn.addEventListener('click', async () => {
       const index = btn.dataset.index;
 
       const confirmDelete = confirm('Yakin ingin menghapus gallery ini?');
 
       if (!confirmDelete) return;
 
-      galleryData.splice(index, 1);
+      const gallery = galleryData[index];
 
-      localStorage.setItem('galleryData', JSON.stringify(galleryData));
+      await deleteGalleryComplete(gallery.id);
+
+      galleryData.splice(index, 1);
 
       renderTable();
 
@@ -197,7 +208,7 @@ function initSearch() {
     const keyword = searchInput.value.toLowerCase();
 
     const filtered = galleryData.filter((item) => {
-      return item.title.toLowerCase().includes(keyword) || item.category.toLowerCase().includes(keyword);
+      return item.title.toLowerCase().includes(keyword) || item.category?.toLowerCase().includes(keyword);
     });
 
     renderTable(filtered);
@@ -227,7 +238,7 @@ function initChart() {
 
       datasets: [
         {
-          data: galleryData.map((item) => item.views),
+          data: galleryData.map((item) => item.views || 0),
 
           backgroundColor: gradient,
 
@@ -289,7 +300,7 @@ function initChart() {
 function updateChart() {
   galleryChart.data.labels = galleryData.map((item) => item.title);
 
-  galleryChart.data.datasets[0].data = galleryData.map((item) => item.views);
+  galleryChart.data.datasets[0].data = galleryData.map((item) => item.views || 0);
 
   galleryChart.update();
 }

@@ -1,3 +1,5 @@
+let galleryData = [];
+
 const galleryGrid = document.getElementById('galleryGrid');
 
 const filterContainer = document.getElementById('galleryFilterButtons');
@@ -89,12 +91,26 @@ function renderFilterButtons() {
     filterContainer.appendChild(button);
   });
 }
-renderFilterButtons();
 
-renderGallery(galleryData);
+async function initGalleryPage() {
+  galleryData = await getAllGallery();
+
+  for (const gallery of galleryData) {
+    const images = await getGalleryImages(gallery.id);
+
+    gallery.images = images.map((img) => img.image_url);
+
+    gallery.desc = gallery.description;
+  }
+
+  renderFilterButtons();
+
+  renderGallery(galleryData);
+}
+
+initGalleryPage();
 
 /* SEARCH */
-
 const searchInput = document.getElementById('gallerySearch');
 
 searchInput.addEventListener('input', (e) => {

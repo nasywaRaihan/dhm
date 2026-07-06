@@ -38,36 +38,28 @@ function renderHomeGallery() {
   });
 }
 
-document.addEventListener('DOMContentLoaded', () => {
+document.addEventListener('DOMContentLoaded', async () => {
+  galleryData = await getAllGallery();
+
+  for (const gallery of galleryData) {
+    const images = await getGalleryImages(gallery.id);
+
+    gallery.images = images.map((img) => img.image_url);
+
+    gallery.desc = gallery.description;
+  }
+
   renderHomeGallery();
 
-  /* NAVBAR */
-  if (typeof initNavbar === 'function') {
-    initNavbar();
-  }
+  if (typeof initNavbar === 'function') initNavbar();
 
-  /* GALLERY */
-  if (typeof initGallery === 'function') {
-    initGallery();
-  }
+  if (typeof initGallery === 'function') initGallery();
 
-  /* SWIPER */
-  if (typeof initSwiper === 'function') {
-    initSwiper();
-  }
+  if (typeof initSwiper === 'function') initSwiper();
 
-  /* ANIMATION */
-  if (typeof initAnimation === 'function') {
-    initAnimation();
-  }
+  if (typeof initAnimation === 'function') initAnimation();
 
-  /* DIVISI POPUP */
-  if (typeof initDivisiPopup === 'function') {
-    initDivisiPopup();
-  }
+  if (typeof initDivisiPopup === 'function') initDivisiPopup();
 
-  /* LOGIN POPUP */
-  if (typeof initLoginPopup === 'function') {
-    initLoginPopup();
-  }
+  if (typeof initLoginPopup === 'function') initLoginPopup();
 });
