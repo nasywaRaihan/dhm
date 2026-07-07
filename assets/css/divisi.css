@@ -3,12 +3,7 @@
 
   background: var(--secondary);
 
-  margin-top: -200px;
-
-  padding: 260px 80px 30px;
-
-  border-top-left-radius: 50% 180px;
-  border-top-right-radius: 50% 180px;
+  padding: 30px 80px 30px;
 
   overflow: hidden;
 

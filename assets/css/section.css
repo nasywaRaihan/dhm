@@ -95,9 +95,9 @@
   border-radius: 32px;
   padding: 30px 20px;
   text-align: center;
-  background: rgba(255, 255, 255, 0.45);
+  background: #f4fff6;
 
-  border: 1px solid rgba(255, 255, 255, 0.5);
+  border: 2px linear-gradient(to right, #b2e1bc, #3d5f3e);
 
   box-shadow:
     0 10px 30px rgba(0, 0, 0, 0.08),

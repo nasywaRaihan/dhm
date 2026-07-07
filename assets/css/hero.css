@@ -46,23 +46,26 @@
 .hero-left {
   flex: 1;
   z-index: 2;
-  max-width: 650px;
+  max-width: 800px;
   margin-bottom: 10%;
-  margin-left: -20px;
+  margin-left: -50px;
+  margin-top: -60px;
 }
 
 .hero-left img {
-  width: 650px;
-  transform: translateX(-50px);
+  width: 800px;
   display: block;
-  transform: none;
+
+  -webkit-mask-image: linear-gradient(to bottom, black 75%, transparent 100%);
+
+  mask-image: linear-gradient(to bottom, black 75%, transparent 100%);
 }
 
 .hero-right {
   flex: 1;
   max-width: 800px;
   padding: 0 16px;
-  margin: 20px;
+  margin-right: 50px;
   transform: translateY(-50px);
 
   display: flex;

@@ -266,11 +266,17 @@ body {
 }
 
 .stats-card h3 {
-  font-size: 34px;
-
+  font-size: var(--text-md);
   color: var(--primary);
-
   margin-bottom: 8px;
+
+  display: -webkit-box;
+  -webkit-line-clamp: 2; /* maksimal 2 baris */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+
+  line-height: 1.4;
 }
 
 .stats-card p {
