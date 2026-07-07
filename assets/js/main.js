@@ -26,7 +26,7 @@ function renderHomeGallery() {
 
         <p>${item.division}</p>
 
-        <span>${item.date}</span>
+        <span>${formatTanggal(item.date)}</span>
 
         <button class="openGallery">
           Selengkapnya

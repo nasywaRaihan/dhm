@@ -112,7 +112,7 @@
 }
 
 .divisi-modal-content h2 {
-  font-size: var(--text-2xl);
+  font-size: var(--text-md);
 
   color: var(--primary);
 
@@ -226,7 +226,7 @@
 }
 
 .popup-gallery-info h2 {
-  font-size: var(--text-3xl);
+  font-size: var(--text-2xl);
 
   color: var(--primary);
 

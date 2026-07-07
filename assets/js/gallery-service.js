@@ -182,3 +182,16 @@ async function deleteGalleryComplete(id) {
 
   return await deleteGallery(id);
 }
+
+//sementara
+function formatTanggal(dateString) {
+  if (!dateString) return '-';
+
+  const date = new Date(dateString);
+
+  return date.toLocaleDateString('id-ID', {
+    day: '2-digit',
+    month: 'long',
+    year: 'numeric',
+  });
+}

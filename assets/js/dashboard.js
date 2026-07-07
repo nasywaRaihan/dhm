@@ -99,7 +99,7 @@ function renderTable(data = galleryData) {
             </h4>
 
             <p>
-              ${new Date(item.date).toLocaleDateString('id-ID')}
+              ${formatTanggal(item.date)}
             </p>
 
           </div>

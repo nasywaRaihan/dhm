@@ -23,7 +23,7 @@ async function initGalleryDetail() {
   }
 
   detailImage.src = gallery.thumbnail;
-  detailDate.textContent = gallery.date;
+  detailDate.textContent = formatTanggal(gallery.date);
   detailTitle.textContent = gallery.title;
   detailDivision.textContent = gallery.division;
   detailDesc.innerHTML = gallery.description;

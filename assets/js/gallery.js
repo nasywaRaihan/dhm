@@ -48,7 +48,7 @@ function initGallery() {
 
     popupTitle.textContent = data.title;
 
-    popupDate.textContent = data.date;
+    popupDate.textContent = formatTanggal(data.date);
 
     const plainDesc = data.desc.replace(/<[^>]*>/g, '');
 

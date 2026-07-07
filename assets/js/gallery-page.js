@@ -33,7 +33,7 @@ function renderGallery(data) {
         </p>
 
         <span>
-          ${item.date}
+          ${formatTanggal(item.date)}
         </span>
 
         <a href="gallery-detail.html?slug=${item.slug}" class="detail-btn">
