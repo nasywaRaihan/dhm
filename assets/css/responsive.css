@@ -59,7 +59,8 @@
   }
 
   .misi-card {
-    min-height: auto;
+    min-height: unset;
+    height: auto;
     padding: 55px 18px 22px;
     border-radius: 22px;
   }
@@ -67,6 +68,7 @@
   .misi-item {
     width: 100%;
     max-width: 340px;
+    padding-top: 50px;
   }
 
   .misi-icon {
@@ -82,6 +84,8 @@
   .misi-card p {
     font-size: 11px;
     line-height: 1.7;
+
+    margin: 0;
   }
 
   .visi-card {
@@ -591,6 +595,8 @@
     font-size: 24px;
 
     text-align: center;
+
+    -webkit-line-clamp: 2;
   }
 
   .popup-gallery-info p {

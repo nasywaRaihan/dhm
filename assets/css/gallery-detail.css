@@ -50,6 +50,7 @@
 .gallery-detail-content #detailDesc {
   line-height: 1.9;
   color: var(--text-dark);
+  text-align: justify;
 }
 
 .detail-gallery {
@@ -95,7 +96,7 @@
 }
 
 .gallery-detail-content h1 {
-  font-size: clamp(40px, 5vw, 68px);
+  font-size: var(--text-2xl);
 
   color: var(--primary);
 
@@ -122,6 +123,8 @@
   line-height: 2;
 
   font-size: var(--text-md);
+
+  text-align: justify;
 }
 
 .detail-gallery h2 {

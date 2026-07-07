@@ -44,14 +44,16 @@
 }
 
 .hero-left {
-  flex: 0.8;
+  flex: 1;
   z-index: 2;
+  max-width: 650px;
   margin-bottom: 10%;
-  justify-content: center;
+  margin-left: -20px;
 }
 
 .hero-left img {
-  width: 420px;
+  width: 650px;
+  transform: translateX(-50px);
   display: block;
   transform: none;
 }

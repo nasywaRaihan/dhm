@@ -231,6 +231,16 @@
   color: var(--primary);
 
   margin-bottom: 18px;
+
+  line-height: 1.4;
+
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+
+  -webkit-line-clamp: 3;
+
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .popup-date {
@@ -240,7 +250,7 @@
 
   opacity: 0.8;
 
-  margin-bottom: 24px;
+  margin-bottom: 2px;
 
   font-size: var(--text-xs);
 }
@@ -615,6 +625,8 @@
     font-size: 32px;
 
     margin-bottom: 12px;
+
+    -webkit-line-clamp: 2;
   }
 
   .popup-date {
