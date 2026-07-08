@@ -115,6 +115,8 @@ function initGallery() {
 
     loadGallery(currentGallery);
 
+    countViewOnce(galleryData[currentGallery].id);
+
     galleryPopup.classList.add('active');
   });
 

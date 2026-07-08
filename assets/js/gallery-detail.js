@@ -17,6 +17,8 @@ async function initGalleryDetail() {
 
   const gallery = await getGalleryBySlug(slug);
 
+  countViewOnce(gallery.id);
+
   if (!gallery) {
     detailTitle.textContent = 'Gallery tidak ditemukan';
     return;

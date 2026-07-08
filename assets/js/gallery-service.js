@@ -183,7 +183,7 @@ async function deleteGalleryComplete(id) {
   return await deleteGallery(id);
 }
 
-//sementara
+/* FORMAT TANGGAL */
 function formatTanggal(dateString) {
   if (!dateString) return '-';
 
@@ -194,4 +194,29 @@ function formatTanggal(dateString) {
     month: 'long',
     year: 'numeric',
   });
+}
+
+/* INCREMENT VIEW */
+async function incrementGalleryView(id) {
+  const { data, error } = await window.db.rpc('increment_gallery_view', {
+    gallery_id_input: id,
+  });
+
+  if (error) {
+    console.error(error);
+    return false;
+  }
+
+  return true;
+}
+
+/* COUNT VIEW ONCE */
+function countViewOnce(id) {
+  const key = `gallery_view_${id}`;
+
+  if (sessionStorage.getItem(key)) return;
+
+  sessionStorage.setItem(key, true);
+
+  incrementGalleryView(id);
 }
