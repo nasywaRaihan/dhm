@@ -1,5 +1,7 @@
 /* ELEMENT */
 let galleryData = [];
+let currentPage = 1;
+let rowsPerPage = 10;
 
 const totalGallery = document.getElementById('totalGallery');
 
@@ -12,6 +14,8 @@ const tableBody = document.getElementById('galleryTableBody');
 const emptyState = document.getElementById('emptyState');
 
 const searchInput = document.getElementById('searchInput');
+
+const tableInfo = document.getElementById('tableInfo');
 
 /* INIT */
 window.addEventListener('DOMContentLoaded', async () => {
@@ -34,6 +38,15 @@ window.addEventListener('DOMContentLoaded', async () => {
   initSearch();
 
   initLogout();
+
+  // PAGINATION SIZE
+  document.getElementById('pageSize').addEventListener('change', (e) => {
+    rowsPerPage = Number(e.target.value);
+
+    currentPage = 1;
+
+    renderTable();
+  });
 });
 
 /* STATS */
@@ -57,17 +70,27 @@ function updateStats() {
 function renderTable(data = galleryData) {
   tableBody.innerHTML = '';
 
-  if (data.length === 0) {
+  if (!data.length) {
     emptyState.style.display = 'flex';
-
     return;
   }
 
   emptyState.style.display = 'none';
 
-  data.forEach((item, index) => {
-    const row = document.createElement('tr');
+  const start = (currentPage - 1) * rowsPerPage;
+  const end = start + rowsPerPage;
 
+  const pageData = data.slice(start, end);
+
+  const from = data.length === 0 ? 0 : start + 1;
+  const to = Math.min(end, data.length);
+
+  tableInfo.textContent = `Menampilkan ${from} - ${to} dari ${data.length} gallery`;
+
+  pageData.forEach((item) => {
+    const realIndex = galleryData.findIndex((g) => g.id === item.id);
+
+    const row = document.createElement('tr');
     row.innerHTML = `
     
       <td>
@@ -116,14 +139,14 @@ function renderTable(data = galleryData) {
 
           <button
             class="edit-btn"
-            data-index="${index}"
+            data-index="${realIndex}"
           >
             Edit
           </button>
 
           <button
             class="delete-btn"
-            data-index="${index}"
+            data-index="${realIndex}"
           >
             Delete
           </button>
@@ -138,8 +161,78 @@ function renderTable(data = galleryData) {
   });
 
   initDeleteButtons();
-
   initEditButtons();
+
+  renderPagination(data.length);
+  renderPagination(data.length);
+}
+
+/*RENDER*/
+function renderPagination(totalRows) {
+  const pagination = document.getElementById('pagination');
+
+  pagination.innerHTML = '';
+
+  const totalPages = Math.ceil(totalRows / rowsPerPage);
+
+  if (totalPages <= 1) return;
+
+  // Prev
+
+  const prev = document.createElement('button');
+
+  prev.innerHTML = '←';
+
+  prev.disabled = currentPage === 1;
+
+  prev.onclick = () => {
+    currentPage--;
+
+    renderTable();
+  };
+
+  pagination.appendChild(prev);
+
+  for (let i = 1; i <= totalPages; i++) {
+    const btn = document.createElement('button');
+
+    btn.innerHTML = i;
+
+    if (i === currentPage) {
+      btn.classList.add('active');
+    }
+
+    btn.onclick = () => {
+      currentPage = i;
+
+      renderTable();
+    };
+
+    pagination.appendChild(btn);
+  }
+
+  const next = document.createElement('button');
+
+  next.innerHTML = '→';
+
+  next.disabled = currentPage === totalPages;
+
+  next.onclick = () => {
+    currentPage++;
+
+    renderTable();
+  };
+
+  pagination.appendChild(next);
+}
+
+/*UPDATE TABEL*/
+function updateTableInfo(totalRows) {
+  const info = document.getElementById('tableInfo');
+
+  const showing = Math.max(0, Math.min(rowsPerPage, totalRows - (currentPage - 1) * rowsPerPage));
+
+  info.textContent = `Menampilkan ${showing} dari ${totalRows} gallery`;
 }
 
 /* EDIT */
@@ -190,6 +283,8 @@ function initSearch() {
     const filtered = galleryData.filter((item) => {
       return item.title.toLowerCase().includes(keyword) || item.category?.toLowerCase().includes(keyword);
     });
+
+    currentPage = 1;
 
     renderTable(filtered);
   });

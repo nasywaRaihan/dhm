@@ -657,30 +657,46 @@ body {
   gap: 20px;
 }
 
+/* ==================================== */
+/* PAGE SIZE */
+/* ==================================== */
+
 .page-size {
   display: flex;
-
   align-items: center;
-
   gap: 12px;
 
-  font-size: 14px;
+  background: #ffffff;
+
+  padding: 12px;
 
   color: var(--text-soft);
+
+  font-size: 14px;
 }
 
 .page-size select {
-  height: 44px;
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
 
-  padding: 0 16px;
+  min-width: 74px;
+  height: 48px;
 
-  border-radius: 14px;
+  padding: 0 42px 0 18px;
 
   border: none;
 
-  background: #f5f7f5;
+  border-radius: 16px;
 
-  font-family: Poppins;
+  background:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%232f4f2f' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'/%3E%3C/svg%3E")
+      no-repeat right 16px center,
+    rgba(47, 79, 47, 0.06);
+
+  color: var(--primary);
+
+  font-size: 15px;
 
   font-weight: 600;
 
@@ -690,15 +706,72 @@ body {
 }
 
 .page-size select:hover {
-  background: #edf3ed;
+  background-color: rgba(47, 79, 47, 0.1);
+}
+
+.page-size select:focus {
+  outline: none;
+
+  box-shadow: 0 0 0 5px rgba(47, 79, 47, 0.08);
+}
+
+.table-info {
+  color: var(--text-soft);
+
+  font-size: 14px;
+
+  font-weight: 500;
+
+  letter-spacing: 0.2px;
+
+  white-space: nowrap;
 }
 
 .pagination {
   display: flex;
 
-  gap: 10px;
-
   align-items: center;
+
+  gap: 10px;
+}
+
+.pagination button {
+  width: 42px;
+  height: 42px;
+
+  border: none;
+
+  border-radius: 14px;
+
+  background: #eef3ee;
+
+  color: var(--primary);
+
+  font-weight: 600;
+
+  cursor: pointer;
+
+  transition: 0.25s;
+}
+
+.pagination button:hover {
+  background: #dce7dc;
+
+  transform: translateY(-2px);
+}
+
+.pagination button.active {
+  background: linear-gradient(135deg, #6f946f, #2f4f2f);
+
+  color: white;
+
+  box-shadow: 0 10px 22px rgba(47, 79, 47, 0.18);
+}
+
+.pagination button:disabled {
+  opacity: 0.35;
+
+  cursor: not-allowed;
 }
 
 .page-btn {
