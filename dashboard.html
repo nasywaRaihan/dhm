@@ -99,10 +99,12 @@
         <section class="dashboard-box">
           <div class="box-header">
             <div>
-              <h2>Statistik Views</h2>
+              <h2>📊 Statistik Views</h2>
 
-              <p>Berdasarkan jumlah views gallery</p>
+              <p>Jumlah kunjungan setiap gallery</p>
             </div>
+
+            <span class="chart-badge"> Realtime </span>
           </div>
 
           <div class="chart-wrapper">
@@ -144,6 +146,26 @@
 
               <tbody id="galleryTableBody"></tbody>
             </table>
+
+            <div class="table-footer">
+              <div class="page-size">
+                <span>Tampilkan</span>
+
+                <select id="pageSize">
+                  <option value="5">5</option>
+
+                  <option value="10" selected>10</option>
+
+                  <option value="20">20</option>
+
+                  <option value="50">50</option>
+                </select>
+
+                <span>gallery</span>
+              </div>
+
+              <div id="pagination" class="pagination"></div>
+            </div>
           </div>
 
           <!-- EMPTY -->

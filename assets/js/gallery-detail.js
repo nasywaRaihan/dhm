@@ -17,12 +17,13 @@ async function initGalleryDetail() {
 
   const gallery = await getGalleryBySlug(slug);
 
-  countViewOnce(gallery.id);
-
   if (!gallery) {
     detailTitle.textContent = 'Gallery tidak ditemukan';
     return;
   }
+
+  // Hitung view (tidak akan double jika sebelumnya dari popup)
+  countViewOnce(gallery.id, 'detail');
 
   detailImage.src = gallery.thumbnail;
   detailDate.textContent = formatTanggal(gallery.date);
@@ -74,4 +75,8 @@ shareBtn.addEventListener('click', async () => {
   } catch {
     alert('Gagal menyalin link.');
   }
+});
+
+window.addEventListener('pagehide', () => {
+  resetGalleryView();
 });

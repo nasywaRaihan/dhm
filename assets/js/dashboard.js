@@ -1,7 +1,4 @@
-/* ====================================== */
 /* ELEMENT */
-/* ====================================== */
-
 let galleryData = [];
 
 const totalGallery = document.getElementById('totalGallery');
@@ -16,10 +13,7 @@ const emptyState = document.getElementById('emptyState');
 
 const searchInput = document.getElementById('searchInput');
 
-/* ====================================== */
 /* INIT */
-/* ====================================== */
-
 window.addEventListener('DOMContentLoaded', async () => {
   galleryData = await getAllGallery();
 
@@ -42,10 +36,7 @@ window.addEventListener('DOMContentLoaded', async () => {
   initLogout();
 });
 
-/* ====================================== */
 /* STATS */
-/* ====================================== */
-
 function updateStats() {
   totalGallery.textContent = galleryData.length;
 
@@ -62,10 +53,7 @@ function updateStats() {
   topGallery.textContent = popular?.title || '-';
 }
 
-/* ====================================== */
 /* TABLE */
-/* ====================================== */
-
 function renderTable(data = galleryData) {
   tableBody.innerHTML = '';
 
@@ -154,9 +142,7 @@ function renderTable(data = galleryData) {
   initEditButtons();
 }
 
-/* ====================================== */
 /* EDIT */
-/* ====================================== */
 function initEditButtons() {
   const buttons = document.querySelectorAll('.edit-btn');
 
@@ -169,10 +155,7 @@ function initEditButtons() {
   });
 }
 
-/* ====================================== */
 /* DELETE */
-/* ====================================== */
-
 function initDeleteButtons() {
   const buttons = document.querySelectorAll('.delete-btn');
 
@@ -199,10 +182,7 @@ function initDeleteButtons() {
   });
 }
 
-/* ====================================== */
 /* SEARCH */
-/* ====================================== */
-
 function initSearch() {
   searchInput.addEventListener('input', () => {
     const keyword = searchInput.value.toLowerCase();
@@ -215,10 +195,7 @@ function initSearch() {
   });
 }
 
-/* ====================================== */
 /* CHART */
-/* ====================================== */
-
 let galleryChart;
 
 function initChart() {
@@ -226,15 +203,33 @@ function initChart() {
 
   const gradient = ctx.getContext('2d').createLinearGradient(0, 0, 0, 400);
 
-  gradient.addColorStop(0, 'rgba(47,79,47,0.9)');
+  gradient.addColorStop(0, '#405F3D');
 
-  gradient.addColorStop(1, 'rgba(47,79,47,0.2)');
+  gradient.addColorStop(1, 'rgba(87, 153, 87, 0.04)');
+
+  const shadowPlugin = {
+    id: 'shadow',
+
+    beforeDatasetsDraw(chart) {
+      const { ctx } = chart;
+
+      ctx.save();
+
+      ctx.shadowColor = 'rgba(47,79,47,.25)';
+      ctx.shadowBlur = 18;
+      ctx.shadowOffsetY = 8;
+    },
+
+    afterDatasetsDraw(chart) {
+      chart.ctx.restore();
+    },
+  };
 
   galleryChart = new Chart(ctx, {
     type: 'bar',
 
     data: {
-      labels: galleryData.map((item) => item.title),
+      labels: galleryData.map(() => ''),
 
       datasets: [
         {
@@ -242,11 +237,15 @@ function initChart() {
 
           backgroundColor: gradient,
 
-          borderRadius: 16,
+          borderRadius: 999,
 
           borderSkipped: false,
 
           maxBarThickness: 56,
+
+          hoverBorderWidth: 0,
+
+          hoverBackgroundColor: 'rgba(87, 153, 87, 0.58)',
         },
       ],
     },
@@ -257,7 +256,9 @@ function initChart() {
       maintainAspectRatio: false,
 
       animation: {
-        duration: 1200,
+        duration: 1500,
+
+        easing: 'easeOutQuart',
       },
 
       plugins: {
@@ -267,10 +268,24 @@ function initChart() {
 
         tooltip: {
           backgroundColor: '#2f4f2f',
+          titleColor: '#fff',
+          bodyColor: '#fff',
 
-          padding: 14,
+          padding: 18,
 
-          cornerRadius: 14,
+          cornerRadius: 18,
+
+          displayColors: false,
+
+          callbacks: {
+            title(context) {
+              return galleryData[context[0].dataIndex].title;
+            },
+
+            label(context) {
+              return `👁 ${context.raw} Views`;
+            },
+          },
         },
       },
 
@@ -279,13 +294,23 @@ function initChart() {
           grid: {
             display: false,
           },
+
+          ticks: {
+            display: false,
+          },
         },
 
         y: {
           beginAtZero: true,
 
           grid: {
-            color: 'rgba(0,0,0,0.05)',
+            color: 'rgba(47,79,47,.08)',
+            drawBorder: false,
+          },
+
+          ticks: {
+            precision: 0,
+            stepSize: 1,
           },
         },
       },
@@ -293,10 +318,7 @@ function initChart() {
   });
 }
 
-/* ====================================== */
 /* UPDATE CHART */
-/* ====================================== */
-
 function updateChart() {
   galleryChart.data.labels = galleryData.map((item) => item.title);
 
@@ -305,10 +327,7 @@ function updateChart() {
   galleryChart.update();
 }
 
-/* ====================================== */
 /* AUTH CHECK */
-/* ====================================== */
-
 const isLoggedIn = localStorage.getItem('adminLoggedIn');
 
 if (isLoggedIn !== 'true') {

@@ -115,6 +115,8 @@ function initGallery() {
 
     loadGallery(currentGallery);
 
+    countViewOnce(galleryData[currentGallery].id, 'popup');
+
     countViewOnce(galleryData[currentGallery].id);
 
     galleryPopup.classList.add('active');
@@ -129,6 +131,8 @@ function initGallery() {
     }
 
     loadGallery(currentGallery);
+
+    countViewOnce(galleryData[currentGallery].id, 'popup');
   });
 
   /* PREV */
@@ -140,17 +144,23 @@ function initGallery() {
     }
 
     loadGallery(currentGallery);
+
+    countViewOnce(galleryData[currentGallery].id, 'popup');
   });
 
   /* CLOSE */
   closeGallery.addEventListener('click', () => {
     galleryPopup.classList.remove('active');
+
+    resetGalleryView();
   });
 
   /* CLICK OUTSIDE */
   galleryPopup.addEventListener('click', (e) => {
     if (e.target === galleryPopup) {
       galleryPopup.classList.remove('active');
+
+      resetGalleryView();
     }
   });
 

@@ -211,12 +211,22 @@ async function incrementGalleryView(id) {
 }
 
 /* COUNT VIEW ONCE */
-function countViewOnce(id) {
-  const key = `gallery_view_${id}`;
+function getCurrentGalleryView() {
+  return sessionStorage.getItem('gallery_current');
+}
 
-  if (sessionStorage.getItem(key)) return;
+/* COUNT VIEW ONCE */
+async function countViewOnce(id) {
+  const current = getCurrentGalleryView();
 
-  sessionStorage.setItem(key, true);
+  if (current === id) return;
 
-  incrementGalleryView(id);
+  sessionStorage.setItem('gallery_current', id);
+
+  await incrementGalleryView(id);
+}
+
+/* RESET GALLERY VIEW */
+function resetGalleryView() {
+  sessionStorage.removeItem('gallery_current');
 }
