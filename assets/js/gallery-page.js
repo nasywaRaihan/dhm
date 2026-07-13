@@ -37,7 +37,7 @@ function renderGallery(data) {
         </span>
 
         <a href="gallery-detail.html?slug=${item.slug}" class="detail-btn">
-            Selengkapnya
+            Baca Selengkapnya
         </a>
 
       </div>

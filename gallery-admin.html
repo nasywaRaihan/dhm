@@ -22,6 +22,7 @@
     <!-- PAGE CSS -->
     <link rel="stylesheet" href="assets/css/admin-sidebar.css" />
     <link rel="stylesheet" href="assets/css/gallery-admin.css" />
+    <link rel="stylesheet" href="assets/css/toast.css" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/cropperjs/1.6.2/cropper.min.css" />
   </head>
 
@@ -68,145 +69,179 @@
 
         <!-- FORM BOX -->
         <div class="gallery-form-box">
-          <div class="form-section-title">Informasi Gallery</div>
-
           <form id="galleryForm">
-            <!-- TITLE -->
-            <div class="form-group">
-              <div class="field-top">
-                <label>Judul Gallery</label>
+            <div class="gallery-editor">
+              <!-- ========================= -->
+              <!-- LEFT -->
+              <!-- ========================= -->
+              <div class="editor-left">
+                <!-- INFORMASI -->
+                <section class="editor-card">
+                  <div class="form-section-title">Informasi Gallery</div>
 
-                <span> Wajib </span>
+                  <!-- TITLE -->
+                  <div class="form-group">
+                    <div class="field-top">
+                      <label>Judul Gallery</label>
+                      <span>Wajib</span>
+                    </div>
+
+                    <input type="text" id="galleryTitle" placeholder="Masukkan judul gallery" required />
+                  </div>
+
+                  <!-- ROW -->
+                  <div class="form-row">
+                    <!-- CATEGORY -->
+                    <div class="form-group">
+                      <div class="field-top">
+                        <label>Kategori Gallery</label>
+                        <span>Wajib</span>
+                      </div>
+
+                      <select id="galleryCategory" required>
+                        <option value="">Pilih Kategori</option>
+                        <option value="Festival">Festival</option>
+                        <option value="Kajian">Kajian</option>
+                        <option value="Pengajian">Relawan</option>
+                        <option value="Dauroh">Dauroh</option>
+                        <option value="Pengembangan">Pengembangan</option>
+                      </select>
+                    </div>
+
+                    <!-- DIVISION -->
+                    <div class="form-group">
+                      <div class="field-top">
+                        <label>Divisi Pelaksana</label>
+                        <span>Wajib</span>
+                      </div>
+
+                      <select id="galleryDivision" required>
+                        <option value="Pengurus Harian">Pengurus Harian</option>
+                        <option value="Humas dan Media">Humas dan Media</option>
+                        <option value="Pembinaan Siswa">Pembinaan Siswa</option>
+                        <option value="Pembinaan Masyarakat">Pembinaan Masyarakat</option>
+                        <option value="Pengembangan Sumber Daya Insani">Pengembangan Sumber Daya Insani</option>
+                        <option value="Kemuslimahan">Kemuslimahan</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <!-- DATE -->
+                  <div class="form-group">
+                    <div class="field-top">
+                      <label>Tanggal Kegiatan</label>
+                      <span>Wajib</span>
+                    </div>
+
+                    <input type="text" id="galleryDate" placeholder="Pilih tanggal kegiatan" required />
+                  </div>
+                </section>
+
+                <!-- THUMBNAIL -->
+                <section class="editor-card">
+                  <div class="form-section-title">Thumbnail Gallery</div>
+
+                  <div class="form-group">
+                    <div class="field-top">
+                      <label>Thumbnail</label>
+                      <span>Wajib</span>
+                    </div>
+
+                    <div class="upload-box">
+                      <input type="file" id="galleryThumbnail" accept="image/*" hidden />
+
+                      <label for="galleryThumbnail" class="upload-label">
+                        <span class="upload-icon"> ⬆ </span>
+
+                        <p>Upload Thumbnail</p>
+
+                        <small> PNG, JPG, WEBP • Max 2MB </small>
+                      </label>
+                    </div>
+                  </div>
+
+                  <img id="thumbnailPreview" class="thumbnail-preview" alt="Thumbnail Preview" />
+                  <div class="upload-status" id="thumbStatus">Belum ada thumbnail dipilih</div>
+                </section>
+
+                <!-- DESKRIPSI -->
+                <section class="editor-card">
+                  <div class="form-section-title">Deskripsi Gallery</div>
+
+                  <div class="form-group">
+                    <div class="field-top">
+                      <label>Deskripsi</label>
+                      <span>Wajib</span>
+                    </div>
+
+                    <textarea id="galleryDesc" placeholder="Masukkan deskripsi gallery" required></textarea>
+                  </div>
+                </section>
+
+                <!-- FOTO -->
+                <section class="editor-card">
+                  <div class="form-section-title">Dokumentasi Kegiatan</div>
+
+                  <div class="form-group">
+                    <div class="field-top">
+                      <label>Foto Dokumentasi</label>
+                      <span>Wajib</span>
+                    </div>
+
+                    <div class="upload-box">
+                      <input type="file" id="galleryImages" accept="image/*" multiple hidden />
+
+                      <label for="galleryImages" class="upload-label">
+                        <span class="upload-icon"> ⬆ </span>
+
+                        <p>Upload Foto Kegiatan</p>
+
+                        <small> Bisa pilih banyak foto sekaligus </small>
+                      </label>
+                    </div>
+                  </div>
+
+                  <div id="imagesPreview" class="images-preview"></div>
+                </section>
               </div>
 
-              <input type="text" id="galleryTitle" placeholder="Masukkan judul gallery" required />
+              <!-- ========================= -->
+              <!-- RIGHT -->
+              <!-- ========================= -->
+
+              <aside class="editor-right">
+                <button type="button" class="preview-toggle" id="previewToggle">
+                  <span>🖼 Preview Gallery</span>
+
+                  <span class="preview-arrow">▼</span>
+                </button>
+
+                <div class="preview-card">
+                  <h3>Preview Gallery</h3>
+
+                  <div class="preview-thumb-wrap">
+                    <img id="liveThumb" class="preview-thumb" src="https://placehold.co/800x500/eef5ed/5f7d5f?text=Thumbnail" />
+                  </div>
+
+                  <div class="preview-content">
+                    <span id="liveCategory" class="preview-badge"> Kategori </span>
+
+                    <h2 id="liveTitle">Judul Gallery</h2>
+
+                    <p id="liveDivision">Divisi Pelaksana</p>
+
+                    <small id="liveDate"> Tanggal Kegiatan </small>
+
+                    <hr />
+
+                    <p id="liveDesc">Deskripsi gallery akan muncul di sini...</p>
+                  </div>
+                </div>
+              </aside>
             </div>
 
-            <!-- ROW -->
-            <div class="form-row">
-              <!-- CATEGORY -->
-              <div class="form-group">
-                <div class="field-top">
-                  <label> Kategori Gallery </label>
-
-                  <span> Wajib </span>
-                </div>
-
-                <select id="galleryCategory" required>
-                  <option value="">Pilih Kategori</option>
-
-                  <option value="Festival">Festival</option>
-
-                  <option value="Kajian">Kajian</option>
-
-                  <option value="Pengajian">Relawan</option>
-
-                  <option value="Dauroh">Dauroh</option>
-
-                  <option value="Dauroh">Pengembangan</option>
-                </select>
-              </div>
-
-              <!-- DIVISION -->
-              <div class="form-group">
-                <div class="field-top">
-                  <label> Divisi Pelaksana </label>
-
-                  <span> Wajib </span>
-                </div>
-
-                <select id="galleryDivision" required>
-                  <option value="Pengurus Harian">Pengurus Harian</option>
-
-                  <option value="Humas dan Media">Humas dan Media</option>
-
-                  <option value="Pembinaan Siswa">Pembinaan Siswa</option>
-
-                  <option value="Pembinaan Masyarakat">Pembinaan Masyarakat</option>
-
-                  <option value="Pengembangan Sumber Daya Insani">Pengembangan Sumber Daya Insani</option>
-
-                  <option value="Kemuslimahan">Kemuslimahan</option>
-                </select>
-              </div>
-            </div>
-
-            <!-- ROW -->
-            <div class="form-row">
-              <!-- DATE -->
-              <div class="form-group">
-                <div class="field-top">
-                  <label> Tanggal Kegiatan </label>
-
-                  <span> Wajib </span>
-                </div>
-
-                <input type="text" id="galleryDate" placeholder="Pilih tanggal kegiatan" required />
-              </div>
-
-              <!-- THUMB -->
-              <div class="form-group">
-                <div class="field-top">
-                  <label>Thumbnail</label>
-
-                  <span> Wajib </span>
-                </div>
-
-                <div class="upload-box">
-                  <input type="file" id="galleryThumbnail" accept="image/*" hidden />
-
-                  <label for="galleryThumbnail" class="upload-label">
-                    <span class="upload-icon"> ⬆ </span>
-
-                    <p>Upload Thumbnail</p>
-
-                    <small> PNG, JPG, WEBP • Max 2MB </small>
-                  </label>
-                </div>
-              </div>
-            </div>
-
-            <!-- PREVIEW -->
-            <img id="thumbnailPreview" class="thumbnail-preview" alt="Thumbnail Preview" />
-
-            <!-- GALLERY IMAGES -->
-
-            <div class="form-group">
-              <div class="field-top">
-                <label>Foto Dokumentasi</label>
-
-                <span> Wajib </span>
-              </div>
-
-              <div class="upload-box">
-                <input type="file" id="galleryImages" accept="image/*" multiple hidden />
-
-                <label for="galleryImages" class="upload-label">
-                  <span class="upload-icon">⬆</span>
-
-                  <p>Upload Foto Kegiatan</p>
-
-                  <small>Bisa pilih banyak foto sekaligus</small>
-                </label>
-              </div>
-            </div>
-
-            <div id="imagesPreview" class="images-preview"></div>
-
-            <!-- DESCRIPTION -->
-            <div class="form-group">
-              <div class="field-top">
-                <label>Deskripsi</label>
-
-                <span> Wajib </span>
-              </div>
-
-              <textarea id="galleryDesc" placeholder="Masukkan deskripsi gallery" required> </textarea>
-            </div>
-
-            <!-- BUTTON -->
             <button type="submit" class="submit-gallery-btn">
-              <span> Simpan Gallery </span>
+              <span>Simpan Gallery</span>
             </button>
           </form>
         </div>
@@ -223,10 +258,12 @@
 
     <!-- FLATPICKR -->
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://npmcdn.com/flatpickr/dist/l10n/id.js"></script>
 
     <!-- JS -->
     <script src="assets/js/gallery-admin.js"></script>
     <script src="assets/js/admin-logout.js"></script>
+    <script src="assets/js/toast.js"></script>
 
     <div class="logout-popup" id="logoutPopup">
       <div class="logout-popup-content">
@@ -241,5 +278,6 @@
         </div>
       </div>
     </div>
+    <div id="toastContainer" class="toast-container"></div>
   </body>
 </html>

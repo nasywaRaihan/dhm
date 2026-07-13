@@ -18,6 +18,7 @@
 
     <link rel="stylesheet" href="assets/css/admin-sidebar.css" />
     <link rel="stylesheet" href="assets/css/dashboard.css" />
+    <link rel="stylesheet" href="assets/css/toast.css" />
   </head>
 
   <body>
@@ -186,6 +187,7 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <script src="assets/js/supabase.js"></script>
     <script src="assets/js/gallery-service.js"></script>
+    <script src="assets/js/toast.js"></script>
     <script src="assets/js/dashboard.js"></script>
     <script src="assets/js/admin-logout.js"></script>
 
@@ -203,5 +205,22 @@
         </div>
       </div>
     </div>
+
+    <!-- DELETE POPUP -->
+    <div class="logout-popup" id="deletePopup">
+      <div class="logout-popup-content">
+        <h3>Hapus Gallery</h3>
+
+        <p>Apakah kamu yakin ingin menghapus gallery ini?</p>
+
+        <div class="logout-actions">
+          <button id="cancelDelete" class="cancel-btn">Batal</button>
+
+          <button id="confirmDelete" class="confirm-btn">Ya, Hapus</button>
+        </div>
+      </div>
+    </div>
+
+    <div id="toastContainer" class="toast-container"></div>
   </body>
 </html>

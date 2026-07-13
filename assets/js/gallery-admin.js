@@ -57,15 +57,23 @@ function initSelect() {
 /* DATEPICKER */
 function initDatepicker() {
   datePicker = flatpickr('#galleryDate', {
-    dateFormat: 'd F Y',
-
     altInput: true,
-
     altFormat: 'd F Y',
+    dateFormat: 'Y-m-d',
+
+    locale: 'id',
 
     disableMobile: true,
 
+    allowInput: false,
+
+    monthSelectorType: 'static',
+
+    animate: true,
+
     position: 'auto center',
+
+    static: false,
   });
 }
 
@@ -96,6 +104,10 @@ function handleThumbnail() {
       thumbnailPreview.src = event.target.result;
 
       thumbnailPreview.style.display = 'block';
+
+      document.getElementById('thumbStatus').innerHTML = '✅ Thumbnail berhasil dipilih';
+
+      liveThumb.src = event.target.result;
     };
 
     reader.readAsDataURL(file);
@@ -314,24 +326,90 @@ function handleGalleryImages() {
 
 /* SUCCESS */
 function showSuccess(message) {
-  submitBtn.innerHTML = 'Berhasil Disimpan ✓';
-
-  submitBtn.classList.add('success');
-
-  setTimeout(() => {
-    submitBtn.classList.remove('success');
-
-    submitBtn.innerHTML = editGalleryId ? '<span>Update Gallery</span>' : '<span>Simpan Gallery</span>';
-  }, 2000);
+  showToast(message, 'success');
 }
 
 /* ERROR */
 function showError(message) {
-  alert(message);
+  showToast(message, 'error');
+}
+
+function showToast(message, type) {
+  const container = document.getElementById('toastContainer');
+
+  const toast = document.createElement('div');
+
+  toast.className = `toast ${type}`;
+
+  toast.innerHTML = `
+
+        <div class="toast-icon">
+
+            ${type === 'success' ? '✓' : '⚠'}
+
+        </div>
+
+        <div>
+
+            ${message}
+
+        </div>
+
+    `;
+
+  container.appendChild(toast);
+
+  setTimeout(() => {
+    toast.classList.add('hide');
+
+    setTimeout(() => {
+      toast.remove();
+    }, 350);
+  }, 3000);
 }
 
 const isLoggedIn = localStorage.getItem('adminLoggedIn');
 
 if (isLoggedIn !== 'true') {
   window.location.href = 'index.html';
+}
+
+const liveTitle = document.getElementById('liveTitle');
+
+const liveCategory = document.getElementById('liveCategory');
+
+const liveDivision = document.getElementById('liveDivision');
+
+const liveDate = document.getElementById('liveDate');
+
+const liveThumb = document.getElementById('liveThumb');
+
+galleryTitle.addEventListener('input', () => {
+  liveTitle.textContent = galleryTitle.value || 'Judul Gallery';
+});
+
+galleryCategory.addEventListener('change', () => {
+  liveCategory.textContent = galleryCategory.value || 'Kategori';
+});
+
+galleryDivision.addEventListener('change', () => {
+  liveDivision.textContent = galleryDivision.value || 'Divisi';
+});
+
+galleryDate.addEventListener('change', () => {
+  liveDate.textContent = galleryDate.value || 'Tanggal';
+});
+
+const previewToggle = document.getElementById('previewToggle');
+
+const previewCard = document.querySelector('.preview-card');
+
+const previewArrow = document.querySelector('.preview-arrow');
+
+if (previewToggle) {
+  previewToggle.addEventListener('click', () => {
+    previewCard.classList.toggle('show');
+
+    previewArrow.classList.toggle('rotate');
+  });
 }

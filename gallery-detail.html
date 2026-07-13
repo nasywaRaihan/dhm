@@ -13,6 +13,7 @@
     <!-- CSS -->
     <link rel="stylesheet" href="assets/css/base.css" />
     <link rel="stylesheet" href="assets/css/navbar.css" />
+    <link rel="stylesheet" href="assets/css/popup.css" />
     <link rel="stylesheet" href="assets/css/footer.css" />
     <link rel="stylesheet" href="assets/css/gallery-detail.css" />
     <link rel="stylesheet" href="assets/css/responsive.css" />
@@ -87,7 +88,52 @@
     <script src="assets/js/supabase.js"></script>
     <script src="assets/js/gallery-service.js"></script>
     <script src="assets/js/navbar.js"></script>
+    <script src="assets/js/login.js"></script>
     <script src="assets/js/main.js"></script>
     <script src="assets/js/gallery-detail.js"></script>
+
+    <!-- LOGIN POPUP -->
+    <div class="login-popup" id="loginPopup">
+      <div class="login-popup-content">
+        <!-- CLOSE -->
+        <button class="login-close" id="closeLogin">✕</button>
+
+        <!-- HEADER -->
+        <div class="login-header">
+          <h2>Admin Login</h2>
+
+          <p>Masuk untuk mengelola website DHM</p>
+        </div>
+
+        <!-- FORM -->
+        <form class="login-form" id="loginForm">
+          <!-- EMAIL -->
+          <div class="login-group">
+            <label>Email</label>
+
+            <input type="email" id="loginEmail" placeholder="Masukkan email" required />
+          </div>
+
+          <!-- PASSWORD -->
+          <div class="login-group">
+            <label>Password</label>
+
+            <input type="password" id="loginPassword" placeholder="Masukkan password" required />
+          </div>
+
+          <!-- REMEMBER -->
+          <div class="login-options">
+            <label class="remember-me">
+              <input type="checkbox" />
+
+              <span>Remember me</span>
+            </label>
+          </div>
+
+          <!-- BUTTON -->
+          <button type="submit" class="login-btn">Login Sekarang</button>
+        </form>
+      </div>
+    </div>
   </body>
 </html>

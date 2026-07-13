@@ -2,6 +2,11 @@
 let galleryData = [];
 let currentPage = 1;
 let rowsPerPage = 10;
+let deletePopup;
+let confirmDeleteBtn;
+let cancelDeleteBtn;
+
+let selectedDeleteIndex = null;
 
 const totalGallery = document.getElementById('totalGallery');
 
@@ -39,12 +44,57 @@ window.addEventListener('DOMContentLoaded', async () => {
 
   initLogout();
 
+  deletePopup = document.getElementById('deletePopup');
+  confirmDeleteBtn = document.getElementById('confirmDelete');
+  cancelDeleteBtn = document.getElementById('cancelDelete');
+
+  cancelDeleteBtn.addEventListener('click', () => {
+    deletePopup.classList.remove('active');
+  });
+
+  deletePopup.addEventListener('click', (e) => {
+    if (e.target === deletePopup) {
+      deletePopup.classList.remove('active');
+    }
+  });
+
+  confirmDeleteBtn.addEventListener('click', async () => {
+    try {
+      const gallery = galleryData[selectedDeleteIndex];
+
+      console.log('Gallery yang akan dihapus:', gallery);
+
+      const success = await deleteGalleryComplete(gallery.id);
+
+      console.log('Delete result:', success);
+
+      if (!success) {
+        showError('Gagal menghapus gallery');
+        return;
+      }
+
+      deletePopup.classList.remove('active');
+
+      galleryData = await getAllGallery();
+
+      updateStats();
+      renderTable();
+      updateChart();
+
+      selectedDeleteIndex = null;
+
+      showSuccess('Gallery berhasil dihapus');
+    } catch (err) {
+      console.error(err);
+
+      showError('Terjadi kesalahan saat menghapus gallery');
+    }
+  });
+
   // PAGINATION SIZE
   document.getElementById('pageSize').addEventListener('change', (e) => {
     rowsPerPage = Number(e.target.value);
-
     currentPage = 1;
-
     renderTable();
   });
 });
@@ -164,7 +214,6 @@ function renderTable(data = galleryData) {
   initEditButtons();
 
   renderPagination(data.length);
-  renderPagination(data.length);
 }
 
 /*RENDER*/
@@ -250,27 +299,21 @@ function initEditButtons() {
 
 /* DELETE */
 function initDeleteButtons() {
+  console.log('INIT DELETE BUTTONS');
+
   const buttons = document.querySelectorAll('.delete-btn');
 
+  console.log('Jumlah tombol:', buttons.length);
+
   buttons.forEach((btn) => {
-    btn.addEventListener('click', async () => {
-      const index = btn.dataset.index;
+    btn.addEventListener('click', () => {
+      console.log('DELETE DIKLIK');
 
-      const confirmDelete = confirm('Yakin ingin menghapus gallery ini?');
+      selectedDeleteIndex = Number(btn.dataset.index);
 
-      if (!confirmDelete) return;
+      console.log(selectedDeleteIndex);
 
-      const gallery = galleryData[index];
-
-      await deleteGalleryComplete(gallery.id);
-
-      galleryData.splice(index, 1);
-
-      renderTable();
-
-      updateStats();
-
-      updateChart();
+      deletePopup.classList.add('active');
     });
   });
 }
