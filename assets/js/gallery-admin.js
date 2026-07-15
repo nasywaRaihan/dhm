@@ -37,7 +37,30 @@ async function init() {
   handleSubmit();
 }
 
-init();
+/* AUTH CHECK */
+async function checkAuth() {
+  const {
+    data: { session },
+  } = await window.db.auth.getSession();
+
+  if (!session) {
+    window.location.replace('index.html');
+    return false;
+  }
+
+  localStorage.setItem('adminEmail', session.user.email);
+
+  return true;
+}
+
+// Jalankan auth dulu
+(async () => {
+  const ok = await checkAuth();
+
+  if (!ok) return;
+
+  init();
+})();
 
 /* TOM SELECT */
 function initSelect() {
@@ -366,12 +389,6 @@ function showToast(message, type) {
       toast.remove();
     }, 350);
   }, 3000);
-}
-
-const isLoggedIn = localStorage.getItem('adminLoggedIn');
-
-if (isLoggedIn !== 'true') {
-  window.location.href = 'index.html';
 }
 
 const liveTitle = document.getElementById('liveTitle');

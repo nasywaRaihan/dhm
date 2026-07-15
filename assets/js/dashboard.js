@@ -24,6 +24,25 @@ const tableInfo = document.getElementById('tableInfo');
 
 /* INIT */
 window.addEventListener('DOMContentLoaded', async () => {
+  // ==========================
+  // AUTH CHECK
+  // ==========================
+  const {
+    data: { session },
+  } = await window.db.auth.getSession();
+
+  if (!session) {
+    window.location.replace('index.html');
+    return;
+  }
+
+  // simpan info admin (opsional)
+  localStorage.setItem('adminEmail', session.user.email);
+
+  // ==========================
+  // LOAD DASHBOARD
+  // ==========================
+
   galleryData = await getAllGallery();
 
   console.log('galleryData =', galleryData);
@@ -91,7 +110,6 @@ window.addEventListener('DOMContentLoaded', async () => {
     }
   });
 
-  // PAGINATION SIZE
   document.getElementById('pageSize').addEventListener('change', (e) => {
     rowsPerPage = Number(e.target.value);
     currentPage = 1;
@@ -466,8 +484,18 @@ function updateChart() {
 }
 
 /* AUTH CHECK */
-const isLoggedIn = localStorage.getItem('adminLoggedIn');
+async function checkAuth() {
+  const {
+    data: { session },
+  } = await window.db.auth.getSession();
 
-if (isLoggedIn !== 'true') {
-  window.location.href = 'index.html';
+  if (!session) {
+    window.location.replace('index.html');
+    return;
+  }
+
+  // simpan email kalau diperlukan
+  localStorage.setItem('adminEmail', session.user.email);
 }
+
+checkAuth();

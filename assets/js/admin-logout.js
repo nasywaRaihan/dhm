@@ -31,10 +31,17 @@ function initLogout() {
     }
   });
 
-  confirmLogout?.addEventListener('click', () => {
-    localStorage.removeItem('adminLoggedIn');
+  confirmLogout?.addEventListener('click', async () => {
+    // Logout dari Supabase
+    await window.db.auth.signOut();
 
-    window.location.href = 'index.html';
+    // Hapus data lokal yang masih dipakai
+    localStorage.removeItem('adminName');
+    localStorage.removeItem('adminRole');
+    localStorage.removeItem('adminEmail');
+
+    // Kembali ke homepage
+    window.location.replace('index.html');
   });
 }
 

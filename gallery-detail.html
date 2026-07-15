@@ -92,6 +92,8 @@
     <script src="assets/js/main.js"></script>
     <script src="assets/js/gallery-detail.js"></script>
 
+    <div id="toastContainer" class="toast-container"></div>
+
     <!-- LOGIN POPUP -->
     <div class="login-popup" id="loginPopup">
       <div class="login-popup-content">
@@ -102,7 +104,7 @@
         <div class="login-header">
           <h2>Admin Login</h2>
 
-          <p>Masuk untuk mengelola website DHM</p>
+          <p>Masuk menggunakan email admin DHM</p>
         </div>
 
         <!-- FORM -->
@@ -111,7 +113,7 @@
           <div class="login-group">
             <label>Email</label>
 
-            <input type="email" id="loginEmail" placeholder="Masukkan email" required />
+            <input type="email" id="loginEmail" placeholder="Masukkan email" autocomplete="email" required />
           </div>
 
           <!-- PASSWORD -->
